@@ -36,7 +36,7 @@ fun HomeScreen(
     onSearchBarClick: () -> Unit = {}
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
     ) {
 
@@ -54,6 +54,7 @@ fun HomeScreen(
 
                 SearchBar(
                     onSearchBarClick = onSearchBarClick,
+                    readOnly = true
                 )
             }
         }

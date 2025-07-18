@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.shipmentapp.presentation.calculate.CalculateScreen
 import com.example.shipmentapp.presentation.home.HomeScreen
 import com.example.shipmentapp.presentation.search.SearchScreen
 
@@ -68,9 +69,8 @@ fun MainScreenWithBottomNav(navController: NavHostController) {
                 }
 
                 1 -> {
-                    Text(
-                        "Calculate Screen",
-                        modifier = Modifier.padding(paddingValues)
+                    CalculateScreen(
+                        modifier = Modifier.padding(paddingValues),
                     )
                 }
 
