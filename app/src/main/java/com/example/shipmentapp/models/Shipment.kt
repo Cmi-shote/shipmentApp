@@ -24,6 +24,34 @@ data class User(
     val location: String
 )
 
+data class Order(
+    val itemName: String,
+    val trackingNumber: String,
+    val pickupLocation: String,
+    val dropOffLocation: String
+)
+
+val sampleOrders = listOf(
+    Order(
+        itemName = "Shirt",
+        trackingNumber = "123456789",
+        pickupLocation = "Atlanta",
+        dropOffLocation = "Chicago"
+    ),
+    Order(
+        itemName = "Shoes",
+        trackingNumber = "987654321",
+        pickupLocation = "New York",
+        dropOffLocation = "Los Angeles",
+        ),
+    Order(
+        itemName = "Jacket",
+        trackingNumber = "456789123",
+        pickupLocation = "San Francisco",
+        dropOffLocation = "Miami"
+    )
+)
+
 val sampleCard = Shipment(
     senderCity = "Atlanta",
     senderCode = "5243",
@@ -33,6 +61,7 @@ val sampleCard = Shipment(
     status = "Waiting to collect",
     shipmentNumber = "123456789"
 )
+
 
 val vehiclesList = listOf(
     Vehicles("Ocean freight", "International", R.drawable.truck_img),

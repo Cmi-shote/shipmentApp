@@ -32,7 +32,8 @@ import com.example.shipmentapp.presentation.components.VehiclesCard
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    shipment: Shipment = sampleCard
+    shipment: Shipment = sampleCard,
+    onSearchBarClick: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -51,7 +52,9 @@ fun HomeScreen(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                SearchBar()
+                SearchBar(
+                    onSearchBarClick = onSearchBarClick,
+                )
             }
         }
 

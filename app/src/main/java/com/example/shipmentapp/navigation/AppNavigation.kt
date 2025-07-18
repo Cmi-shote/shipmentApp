@@ -26,6 +26,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.shipmentapp.presentation.home.HomeScreen
+import com.example.shipmentapp.presentation.search.SearchScreen
 
 @Composable
 fun AppNavigation(navController: NavHostController) {
@@ -35,6 +36,10 @@ fun AppNavigation(navController: NavHostController) {
     ) {
         composable<AppRoute.MainWithBottomNav> {
             MainScreenWithBottomNav(navController)
+        }
+
+        composable<AppRoute.SearchScreen> {
+            SearchScreen()
         }
     }
 }
@@ -55,7 +60,10 @@ fun MainScreenWithBottomNav(navController: NavHostController) {
                 0 -> {
                     // Groups screen content
                     HomeScreen(
-                        modifier = Modifier.padding(paddingValues)
+                        modifier = Modifier.padding(paddingValues),
+                        onSearchBarClick = {
+                            navController.navigate(AppRoute.SearchScreen)
+                        }
                     )
                 }
 
