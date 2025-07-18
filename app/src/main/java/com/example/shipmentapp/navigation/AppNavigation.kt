@@ -25,7 +25,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.shipmentapp.presentation.HomeScreen
+import com.example.shipmentapp.presentation.home.HomeScreen
 
 @Composable
 fun AppNavigation(navController: NavHostController) {
