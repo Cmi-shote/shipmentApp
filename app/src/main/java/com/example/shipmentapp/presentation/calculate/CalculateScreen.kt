@@ -20,6 +20,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.GifBox
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Scale
@@ -340,22 +341,36 @@ fun CategoryChip(
         modifier = Modifier
             .border(
                 width = 1.dp,
-                color = if (isSelected) Color(0xFF543B9C) else Color.Gray,
+                color = if (isSelected) Color(0xFF142333) else Color.Gray,
                 shape = RoundedCornerShape(8.dp)
             )
             .background(
-                color = if (isSelected) Color(0xFF543B9C).copy(alpha = 0.1f) else Color.Transparent
+                color = if (isSelected) Color(0xFF142333) else Color.Transparent,
+                shape = RoundedCornerShape(8.dp)
             )
             .clickable { onClick() }
             .padding(horizontal = 12.dp, vertical = 12.dp),
         contentAlignment = Alignment.Center
     ) {
-        Text(
-            text = text,
-            fontSize = 14.sp,
-            color = if (isSelected) Color(0xFF543B9C) else Color(0xFF8A8A8A),
-            fontWeight = if (isSelected) FontWeight.Medium else FontWeight.Normal
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            if (isSelected) {
+                Icon(
+                    imageVector = Icons.Default.Check,
+                    contentDescription = null,
+                    tint = Color.White,
+                    modifier = Modifier.size(16.dp)
+                )
+            }
+            Text(
+                text = text,
+                fontSize = 14.sp,
+                color = if (isSelected) Color.White else Color(0xFF8A8A8A),
+                fontWeight = if (isSelected) FontWeight.Medium else FontWeight.Normal
+            )
+        }
     }
 }
 
