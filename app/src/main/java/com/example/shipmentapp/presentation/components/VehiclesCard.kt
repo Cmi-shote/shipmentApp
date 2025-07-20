@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -36,16 +38,16 @@ fun VehiclesCard(
             .background(
                 color = backgroundColor,
                 shape = RoundedCornerShape(16.dp)
-            ),
-        contentAlignment = Alignment.Center
+            )
     ) {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.padding(start = 16.dp, top = 16.dp)
         ) {
             // Title and Subtitle
             Column(
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+                horizontalAlignment = Alignment.Start
             ) {
                 Text(
                     text = title,
@@ -64,7 +66,8 @@ fun VehiclesCard(
             Image(
                 painter = painterResource(id = image),
                 contentDescription = null,
-                modifier = Modifier.size(80.dp)
+                modifier = Modifier.weight(1f).fillMaxWidth(),
+                contentScale = ContentScale.FillBounds
             )
         }
     }
@@ -79,7 +82,7 @@ fun VehicleCardPreview() {
             modifier = Modifier.padding(16.dp),
             title = "Ocean freight",
             subtitle = "International",
-            image = R.drawable.truck_img,
+            image = R.drawable.boat,
             backgroundColor = Color.White
         )
     }
