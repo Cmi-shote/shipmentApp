@@ -37,11 +37,24 @@ fun AppNavigation(navController: NavHostController) {
         startDestination = AppRoute.MainWithBottomNav
     ) {
         composable<AppRoute.MainWithBottomNav> {
-            MainScreenWithBottomNav(navController)
+            HomeScreen(
+//                        modifier = Modifier.padding(paddingValues),
+                onSearchBarClick = {
+                    navController.navigate(AppRoute.SearchScreen)
+                },
+                navigateToCalculateScreen = {
+                    navController.navigate(AppRoute.CalculateScreen)
+                },
+                navigateToShipmentHistoryScreen = {
+                    navController.navigate(AppRoute.ShipmentHistoryScreen)
+                }
+            )
         }
 
         composable<AppRoute.SearchScreen> {
-            SearchScreen()
+            SearchScreen(
+                onBackClick = { navController.popBackStack() }
+            )
         }
 
         composable<AppRoute.CalculateScreen> {
@@ -53,96 +66,3 @@ fun AppNavigation(navController: NavHostController) {
         }
     }
 }
-
-@Composable
-fun MainScreenWithBottomNav(navController: NavHostController) {
-    var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
-
-    Scaffold(
-        bottomBar = { BottomNavigationBar(selectedTabIndex) { selectedTabIndex = it } }
-    ) { paddingValues ->
-        // Your main content here based on selectedTabIndex
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            when (selectedTabIndex) {
-                0 -> {
-                    // Groups screen content
-                    HomeScreen(
-//                        modifier = Modifier.padding(paddingValues),
-                        onSearchBarClick = {
-                            navController.navigate(AppRoute.SearchScreen)
-                        }
-                    )
-                }
-
-                1 -> {
-                   navController.navigate(AppRoute.CalculateScreen)
-                }
-
-                2 -> {
-                    navController.navigate(AppRoute.ShipmentHistoryScreen)
-                }
-
-                3 -> {
-                    Text(
-                        "Profile Screen",
-                        modifier = Modifier.padding(paddingValues)
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun BottomNavigationBar(
-    selectedTabIndex: Int,
-    onTabSelected: (Int) -> Unit
-) {
-    val navigationItems = listOf(
-        BottomNavItem(title = "Home", icon = Icons.Outlined.Home, index = 0),
-        BottomNavItem(title = "Calculate", icon = Icons.Outlined.Calculate, index = 1),
-        BottomNavItem(title = "Shipment", icon = Icons.Default.History, index = 2),
-        BottomNavItem(title = "Profile", icon = Icons.Outlined.Person, index = 3)
-    )
-
-    NavigationBar(
-        containerColor = MaterialTheme.colorScheme.surface,
-        contentColor = MaterialTheme.colorScheme.onSurface
-    ) {
-        navigationItems.forEach { item ->
-
-            NavigationBarItem(
-                selected = selectedTabIndex == item.index,
-                onClick = {
-                    onTabSelected(item.index)
-                },
-                icon = {
-                    Icon(
-                        imageVector = item.icon,
-                        contentDescription = item.title
-                    )
-                },
-                label = {
-                    Text(item.title)
-                },
-                colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = MaterialTheme.colorScheme.primary,
-                    selectedTextColor = MaterialTheme.colorScheme.primary,
-                    unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    indicatorColor = MaterialTheme.colorScheme.primaryContainer
-                )
-            )
-        }
-    }
-}
-
-// Data class for bottom navigation items
-data class BottomNavItem(
-    val title: String,
-    val icon: ImageVector,
-    val index: Int
-)

@@ -27,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,6 +41,7 @@ fun SearchBar(
     showBackIcon: Boolean = false,
     onActionClick: () -> Unit = {},
     onSearchBarClick: () -> Unit = {},
+    onBackClick: () -> Unit = {},
     readOnly: Boolean = false
 ) {
     var searchQuery by remember { mutableStateOf("") }
@@ -50,7 +52,9 @@ fun SearchBar(
                 imageVector = Icons.Default.ArrowBackIosNew,
                 contentDescription = "Back",
                 tint = Color.White,
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(24.dp).clickable {
+                    onBackClick()
+                }
             )
             Spacer(modifier = Modifier.width(12.dp))
         }
@@ -90,7 +94,7 @@ fun SearchBar(
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     readOnly = readOnly,
-                    placeholder = { Text(text = placeholder, style = MaterialTheme.typography.bodyMedium) },
+                    placeholder = { Text(text = placeholder, style = MaterialTheme.typography.bodyMedium, color = Color.Gray) },
                 )
             }
 
@@ -111,7 +115,7 @@ fun SearchBar(
                         imageVector = Icons.Default.Flip,
                         contentDescription = "Action",
                         tint = Color.White,
-                        modifier = Modifier.size(20.dp)
+                        modifier = Modifier.size(20.dp).rotate(90f)
                     )
                 }
             }

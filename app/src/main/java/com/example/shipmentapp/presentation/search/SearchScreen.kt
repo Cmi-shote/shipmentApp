@@ -11,7 +11,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,26 +27,41 @@ import com.example.shipmentapp.models.sampleOrders
 import com.example.shipmentapp.presentation.components.SearchBar
 import com.example.shipmentapp.ui.theme.ShipmentAppTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(
     modifier: Modifier = Modifier,
-    orders: List<Order> = sampleOrders) {
+    orders: List<Order> = sampleOrders,
+    onBackClick: () -> Unit = {}
+) {
     LazyColumn(modifier = modifier) {
         item {
-            Box(
-                modifier = Modifier
-                    .background(color = colorResource(id = R.color.app_color_purple))
-                    .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
-            ) {
-                SearchBar(
-                    showBackIcon = true
+            TopAppBar(
+                title = {
+                    SearchBar(
+                        showBackIcon = true,
+                        onSearchBarClick = onBackClick,
+                        modifier = Modifier.padding(end = 16.dp),
+                        placeholder = "#NEJ200899"
+                    )
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = colorResource(id = R.color.app_color_purple)
                 )
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
+            )
         }
 
         item {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(16.dp)
+                    .background(colorResource(id = R.color.app_color_purple))
+            )
+        }
+
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
