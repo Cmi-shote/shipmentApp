@@ -79,6 +79,14 @@ val sampleOrders = listOf(
     )
 )
 
+val tabs = listOf(
+    TabItem("All", 12),
+    TabItem("Completed", 5),
+    TabItem("In progress", 3),
+    TabItem("Pending Order", 4),
+    TabItem("Cancelled", 0)
+)
+
 val sampleShipments = listOf(
     Shipment(
         status = ShipmentStatus.IN_PROGRESS,
