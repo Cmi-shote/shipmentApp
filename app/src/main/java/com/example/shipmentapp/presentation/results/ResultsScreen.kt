@@ -1,5 +1,6 @@
 package com.example.shipmentapp.presentation.results
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -41,12 +43,10 @@ fun ResultsScreen(
         // MoveMate Logo and Title
         MoveMateHeader()
 
-        Spacer(modifier = Modifier.height(60.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         // 3D Package Illustration
         PackageIllustration()
-
-        Spacer(modifier = Modifier.height(60.dp))
 
         // Estimation Content
         EstimationContent(
@@ -89,86 +89,15 @@ private fun MoveMateHeader() {
 private fun PackageIllustration() {
     // 3D-style package box using CSS-like styling with Compose
     Box(
-        modifier = Modifier.size(160.dp),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
     ) {
         // Main box body
-        Box(
-            modifier = Modifier
-                .size(120.dp)
-                .background(
-                    Color(0xFFB8C5D1), // Light blue-gray
-                    RoundedCornerShape(8.dp)
-                )
-        ) {
-            // Top face highlight
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(20.dp)
-                    .background(
-                        Color(0xFFD1D8DD), // Lighter shade
-                        RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp)
-                    )
-            )
-
-            // Side panel
-            Box(
-                modifier = Modifier
-                    .align(Alignment.CenterEnd)
-                    .width(20.dp)
-                    .height(80.dp)
-                    .background(Color(0xFF9AA5B0)) // Darker shade
-            )
-
-            // Shipping label
-            Box(
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(12.dp)
-                    .size(width = 24.dp, height = 16.dp)
-                    .background(
-                        Color.White,
-                        RoundedCornerShape(2.dp)
-                    )
-            ) {
-                // Small lines to represent text on label
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(2.dp),
-                    verticalArrangement = Arrangement.spacedBy(2.dp)
-                ) {
-                    repeat(3) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(2.dp)
-                                .background(Color(0xFFE5E7EB))
-                        )
-                    }
-                }
-            }
-
-            // Fragile/Handle with care dots
-            Row(
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .padding(start = 16.dp),
-                horizontalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                repeat(3) {
-                    Box(
-                        modifier = Modifier
-                            .size(6.dp)
-                            .background(
-                                Color(0xFF6B7280),
-                                RoundedCornerShape(50)
-                            )
-                    )
-                }
-            }
-        }
+        Image(
+            painter = painterResource(R.drawable.box1),
+            contentDescription = "Package",
+            modifier = Modifier.size(200.dp),
+        )
     }
 }
 
@@ -182,8 +111,7 @@ private fun EstimationContent(
     ) {
         Text(
             text = "Total Estimated Amount",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Medium,
+            style = MaterialTheme.typography.titleLarge,
             color = Color(0xFF374151),
             textAlign = TextAlign.Center
         )
@@ -195,16 +123,16 @@ private fun EstimationContent(
         ) {
             Text(
                 text = estimatedAmount,
-                fontSize = 42.sp,
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.titleLarge,
                 color = Color(0xFF49C38D) // Green color
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = currency,
-                fontSize = 20.sp,
+                style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Medium,
-                color = Color(0xFF6B7280) // Gray color
+                color = Color(0xFF49C38D),
+                modifier = Modifier.align(Alignment.Bottom)
             )
         }
 

@@ -1,5 +1,6 @@
 package com.example.shipmentapp.presentation.calculate
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -47,6 +48,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -217,17 +219,16 @@ fun PackagingDropdown() {
         readOnly = true,
         leadingIcon = {
             Row {
-                Icon(
-                    imageVector = Icons.Default.GifBox,
-                    contentDescription = null,
-                    tint = Color(0xFF8A8A8A),
-                    modifier = Modifier.size(24.dp)
+                Image(
+                    painter = painterResource(R.drawable.box1),
+                    contentDescription = "Package",
+                    modifier = Modifier.size(45.dp)
                 )
-                Spacer(modifier = Modifier.width(8.dp))
                 VerticalDivider(
                     color = Color.Gray.copy(alpha = 0.2f),
-                    modifier = Modifier.height(24.dp)
+                    modifier = Modifier.height(45.dp)
                 )
+                Spacer(modifier = Modifier.width(8.dp))
             }
         },
         trailingIcon = {

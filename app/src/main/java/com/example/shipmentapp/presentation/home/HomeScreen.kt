@@ -39,7 +39,7 @@ import com.example.shipmentapp.presentation.components.VehiclesCard
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    shipment: Shipment = sampleShipments[0],
+    shipment: Shipment = sampleShipments[1],
     onSearchBarClick: () -> Unit = {},
     navigateToCalculateScreen: () -> Unit = {},
     navigateToShipmentHistoryScreen: () -> Unit = {}

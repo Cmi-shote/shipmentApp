@@ -1,5 +1,6 @@
 package com.example.shipmentapp.presentation.shipmentHistory
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -48,6 +49,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -259,17 +261,13 @@ fun ShipmentCard(
             // Package Icon
             Box(
                 modifier = Modifier
-                    .size(48.dp)
-                    .background(
-                        Color(0xFFF3F4F6),
-                        RoundedCornerShape(8.dp)
-                    ),
+                    .size(100.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = "📦",
-                    fontSize = 24.sp
-                ) //todo: fix icon
+                Image(
+                    painter = painterResource(R.drawable.box1),
+                    contentDescription = "Package"
+                )
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.example.shipmentapp.presentation.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -32,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -56,7 +58,7 @@ fun ShipmentCard(
         ),
     ) {
         Column(
-            modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp),
+            modifier = Modifier.padding(top = 24.dp, start = 16.dp, end = 16.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
             // Header Section
@@ -85,31 +87,11 @@ fun ShipmentCard(
                 Box(
                     modifier = Modifier.size(48.dp)
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.LocalShipping,
+                    Image(
+                        painter = painterResource(R.drawable.shipment),
                         contentDescription = "Package",
-                        modifier = Modifier.size(40.dp),
-                        tint = Color(0xFFD97706)
+                        modifier = Modifier.size(48.dp)
                     )
-                    Box(
-                        modifier = Modifier
-                            .size(16.dp)
-                            .offset(x = 8.dp, y = (-4).dp)
-                            .background(
-                                Color.Black,
-                                RoundedCornerShape(4.dp)
-                            )
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(6.dp)
-                                .background(
-                                    Color(0xFFFBBF24),
-                                    CircleShape
-                                )
-                                .align(Alignment.Center)
-                        )
-                    }
                 }
             }
 
@@ -127,29 +109,13 @@ fun ShipmentCard(
                 ) {
                     Box(
                         modifier = Modifier
-                            .size(48.dp)
-                            .background(
-                                Color(0xFFFED7AA),
-                                CircleShape
-                            ),
+                            .size(48.dp),
                         contentAlignment = Alignment.Center
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .size(24.dp)
-                                .background(
-                                    colorResource(id = R.color.app_color_orange),
-                                    RoundedCornerShape(4.dp)
-                                ),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Home,
-                                contentDescription = "Sender",
-                                modifier = Modifier.size(16.dp),
-                                tint = Color.White
+                            Image(
+                                painter = painterResource(R.drawable.sender),
+                                contentDescription = "Package"
                             )
-                        }
                     }
 
                     Column {
@@ -167,15 +133,11 @@ fun ShipmentCard(
                     }
                 }
 
-                Column(
-                    horizontalAlignment = Alignment.End
-                ) {
+                Column {
                     Text(
                         text = "Time",
-                        style = TextStyle(
-                            fontSize = 14.sp,
-                            color = Color.Gray
-                        )
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.Gray
                     )
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -211,29 +173,13 @@ fun ShipmentCard(
                 ) {
                     Box(
                         modifier = Modifier
-                            .size(48.dp)
-                            .background(
-                                Color(0xFFD1FAE5),
-                                CircleShape
-                            ),
+                            .size(48.dp),
                         contentAlignment = Alignment.Center
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .size(24.dp)
-                                .background(
-                                    Color(0xFF10B981),
-                                    RoundedCornerShape(4.dp)
-                                ),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Place,
-                                contentDescription = "Receiver",
-                                modifier = Modifier.size(16.dp),
-                                tint = Color.White
-                            )
-                        }
+                        Image(
+                            painter = painterResource(R.drawable.receiver),
+                            contentDescription = "Package"
+                        )
                     }
 
                     Column {
@@ -251,15 +197,11 @@ fun ShipmentCard(
                     }
                 }
 
-                Column(
-                    horizontalAlignment = Alignment.End
-                ) {
+                Column {
                     Text(
                         text = "Status",
-                        style = TextStyle(
-                            fontSize = 14.sp,
-                            color = Color.Gray
-                        )
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.Gray
                     )
                     Text(
                         text = if (shipment.status == ShipmentStatus.PENDING) "Waiting To Collect" else "In Transit",
@@ -309,7 +251,7 @@ fun ShipmentCard(
 fun ShipmentCardPreview() {
     ShipmentAppTheme {
         ShipmentCard(
-            shipment = sampleShipments[0]
+            shipment = sampleShipments[1]
         )
     }
 }
