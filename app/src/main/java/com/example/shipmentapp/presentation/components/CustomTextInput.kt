@@ -1,5 +1,6 @@
 package com.example.shipmentapp.presentation.components
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.TextFieldColors
@@ -30,9 +31,7 @@ fun CustomOutlineField(
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
-        textStyle = TextStyle(
-            fontWeight = FontWeight.Medium
-        ),
+        textStyle = MaterialTheme.typography.titleLarge,
         singleLine = singleLine,
         modifier = modifier,
         leadingIcon = leadingIcon,

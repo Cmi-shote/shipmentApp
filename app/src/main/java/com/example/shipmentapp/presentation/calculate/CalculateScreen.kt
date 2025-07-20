@@ -26,8 +26,6 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Scale
 import androidx.compose.material.icons.outlined.Archive
 import androidx.compose.material.icons.outlined.Unarchive
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -50,12 +48,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.shipmentapp.R
+import com.example.shipmentapp.presentation.components.CustomButton
 import com.example.shipmentapp.presentation.components.CustomOutlineField
+import com.example.shipmentapp.presentation.components.CustomToolbar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -71,28 +70,7 @@ fun CalculateScreen(
             .fillMaxSize()
     ) {
         // Header
-        TopAppBar(
-            title = {
-                Text(
-                    text = "Shipment history",
-                    color = Color.White,
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Medium
-                )
-            },
-            navigationIcon = {
-                IconButton(onClick = onBackClick) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBackIosNew,
-                        contentDescription = "Back",
-                        tint = Color.White
-                    )
-                }
-            },
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor =colorResource(id = R.color.app_color_purple)
-            )
-        )
+        CustomToolbar(title = "Calculate")
 
         // Content
         LazyColumn(
@@ -119,9 +97,10 @@ fun CalculateScreen(
         }
 
         // Calculate Button
-        CalculateButton(
+        CustomButton(
             onClick = onCalculateClick,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 32.dp)
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 32.dp),
+            text = "Calculate"
         )
     }
 }
@@ -134,8 +113,7 @@ fun DestinationSection() {
         Text(
             text = "Destination",
             style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.Medium,
-            color = Color.Black
+            fontWeight = FontWeight.Medium
         )
 
         Card(
@@ -215,7 +193,6 @@ fun PackagingSection() {
             text = "Packaging",
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Medium,
-            color = Color.Black
         )
 
         Text(
@@ -282,13 +259,12 @@ fun CategoriesSection(
     )
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(
             text = "Categories",
-            fontSize = 24.sp,
             style = MaterialTheme.typography.titleLarge,
-            color = Color.Black
+            fontWeight = FontWeight.Medium
         )
 
         Text(
@@ -358,34 +334,10 @@ fun CategoryChip(
             Text(
                 text = text,
                 fontSize = 14.sp,
-                color = if (isSelected) Color.White else Color(0xFF8A8A8A),
+                color = if (isSelected) Color.White else Color.Black,
                 fontWeight = if (isSelected) FontWeight.Medium else FontWeight.Normal
             )
         }
-    }
-}
-
-@Composable
-fun CalculateButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Button(
-        onClick = onClick,
-        modifier = modifier
-            .fillMaxWidth()
-            .height(56.dp),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = colorResource(id = R.color.app_color_orange)
-        ),
-        shape = RoundedCornerShape(28.dp)
-    ) {
-        Text(
-            text = "Calculate",
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Medium,
-            color = Color.White
-        )
     }
 }
 

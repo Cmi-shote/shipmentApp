@@ -14,4 +14,7 @@ sealed interface AppRoute {
 
     @Serializable
     data object ShipmentHistoryScreen : AppRoute
+
+    @Serializable
+    data object ResultsScreen : AppRoute
 }

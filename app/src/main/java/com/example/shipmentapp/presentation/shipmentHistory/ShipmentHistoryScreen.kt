@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -58,9 +59,9 @@ import com.example.shipmentapp.models.Shipment
 import com.example.shipmentapp.models.ShipmentStatus
 import com.example.shipmentapp.models.TabItem
 import com.example.shipmentapp.models.sampleShipments
+import com.example.shipmentapp.presentation.components.CustomToolbar
 import com.example.shipmentapp.ui.theme.ShipmentAppTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShipmentHistoryScreen(
     onBackClick: () -> Unit = {},
@@ -72,7 +73,8 @@ fun ShipmentHistoryScreen(
         TabItem("All", 12),
         TabItem("Completed", 5),
         TabItem("In progress", 3),
-        TabItem("Pending", 4)
+        TabItem("Pending Order", 4),
+        TabItem("Cancelled", 0)
     )
 
     Column(
@@ -80,27 +82,8 @@ fun ShipmentHistoryScreen(
             .fillMaxSize()
     ) {
         // Top Bar
-        TopAppBar(
-            title = {
-                Text(
-                    text = "Shipment history",
-                    color = Color.White,
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Medium
-                )
-            },
-            navigationIcon = {
-                IconButton(onClick = onBackClick) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBackIosNew,
-                        contentDescription = "Back",
-                        tint = Color.White
-                    )
-                }
-            },
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor =colorResource(id = R.color.app_color_purple)
-            )
+        CustomToolbar(
+            title = "Shipment History"
         )
 
         // Custom Tab Row
@@ -147,7 +130,6 @@ fun ShipmentTabRow(
 ) {
     ScrollableTabRow(
         selectedTabIndex = selectedTabIndex,
-        modifier = modifier.padding(horizontal = 16.dp),
         containerColor = Color.Transparent,
         contentColor = Color.White,
         indicator = { tabPositions ->
@@ -168,7 +150,7 @@ fun ShipmentTabRow(
             Tab(
                 selected = selectedTabIndex == index,
                 onClick = { onTabSelected(index) },
-                modifier = Modifier.padding(horizontal = 4.dp)
+                modifier = Modifier.padding(horizontal = 16.dp)
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -177,7 +159,7 @@ fun ShipmentTabRow(
                     Text(
                         text = tab.title,
                         color = if (selectedTabIndex == index) Color.White else Color.White.copy(alpha = 0.7f),
-                        fontSize = 16.sp,
+                        style = MaterialTheme.typography.bodyLarge,
                         fontWeight = if (selectedTabIndex == index) FontWeight.Medium else FontWeight.Normal
                     )
 
@@ -219,7 +201,6 @@ fun ShipmentCard(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Row(
             modifier = Modifier
@@ -300,12 +281,12 @@ fun ShipmentStatusIcon(modifier: Modifier= Modifier, status: ShipmentStatus) {
 
     val (color, icon, text) = when (status) {
         ShipmentStatus.LOADING -> Triple(
-            Color(0xFF4D86B7),
+            Color(0xFF4A87B6),
             ImageVector.vectorResource(R.drawable.avg_pace),
             "loading"
         )
         ShipmentStatus.IN_PROGRESS -> Triple(
-            Color(0xFF86D1B0),
+            Color(0xFF49C38D),
             Icons.Default.Sync,
             "in-progress"
         )

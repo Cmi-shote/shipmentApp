@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,12 +32,11 @@ fun VehiclesCard(
     backgroundColor: Color = Color.White
 ) {
     Box(
-        modifier = modifier
+        modifier = modifier.size(200.dp)
             .background(
                 color = backgroundColor,
                 shape = RoundedCornerShape(16.dp)
-            )
-            .padding(20.dp),
+            ),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -45,24 +45,19 @@ fun VehiclesCard(
         ) {
             // Title and Subtitle
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 Text(
                     text = title,
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.align(Alignment.Start)
                     )
-                )
                 Text(
                     text = subtitle,
-                    style = TextStyle(
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Normal,
-                        color = Color.Gray
-                    )
+                    style = MaterialTheme.typography.bodySmall,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.Gray,
+                    modifier = Modifier.align(Alignment.Start)
                 )
             }
 

@@ -27,6 +27,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.shipmentapp.presentation.calculate.CalculateScreen
 import com.example.shipmentapp.presentation.home.HomeScreen
+import com.example.shipmentapp.presentation.results.ResultsScreen
 import com.example.shipmentapp.presentation.search.SearchScreen
 import com.example.shipmentapp.presentation.shipmentHistory.ShipmentHistoryScreen
 
@@ -38,7 +39,6 @@ fun AppNavigation(navController: NavHostController) {
     ) {
         composable<AppRoute.MainWithBottomNav> {
             HomeScreen(
-//                        modifier = Modifier.padding(paddingValues),
                 onSearchBarClick = {
                     navController.navigate(AppRoute.SearchScreen)
                 },
@@ -58,11 +58,34 @@ fun AppNavigation(navController: NavHostController) {
         }
 
         composable<AppRoute.CalculateScreen> {
-            CalculateScreen()
+            CalculateScreen(
+                onCalculateClick = {
+                    navController.navigate(AppRoute.ResultsScreen)
+                },
+                onBackClick = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable<AppRoute.ShipmentHistoryScreen> {
-            ShipmentHistoryScreen()
+            ShipmentHistoryScreen(
+                onBackClick = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        composable<AppRoute.ResultsScreen> {
+            ResultsScreen(
+                onBackToHome = {
+                    navController.navigate(AppRoute.ShipmentHistoryScreen){
+                        popUpTo(AppRoute.MainWithBottomNav)
+                        launchSingleTop = true
+                    }
+                }
+
+            )
         }
     }
 }
