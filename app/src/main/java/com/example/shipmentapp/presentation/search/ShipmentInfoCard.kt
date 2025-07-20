@@ -66,7 +66,7 @@ fun ShipmentInfoCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "#${order.orderNumber} • ${order.pickupLocation} ",
+                    text = "${order.orderNumber} • ${order.pickupLocation} ",
                     color = Color(0xFF8A8A8A),
                     fontSize = 14.sp
                 )
@@ -91,7 +91,7 @@ fun ShipmentInfoCard(
 fun CardPreview(modifier: Modifier = Modifier) {
     ShipmentAppTheme {
         ShipmentInfoCard(
-            order = sampleOrders[0]
+            order = sampleOrders[1]
         )
     }
 }

@@ -1,5 +1,9 @@
 package com.example.shipmentapp.presentation.home
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,8 +41,10 @@ import com.example.shipmentapp.presentation.components.ShipmentCard
 import com.example.shipmentapp.presentation.components.VehiclesCard
 import com.example.shipmentapp.ui.theme.ShipmentAppTheme
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun HomeScreen(
+fun SharedTransitionScope.HomeScreen(
+    animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
     shipment: Shipment = sampleShipments[1],
     onSearchBarClick: () -> Unit = {},
@@ -63,6 +69,13 @@ fun HomeScreen(
                         onSearchBarClick = onSearchBarClick,
                         readOnly = true,
                         modifier = Modifier.padding(16.dp)
+                            .sharedElement(
+                                sharedContentState = rememberSharedContentState(key= "searchK"),
+                                animatedVisibilityScope = animatedVisibilityScope,
+                                boundsTransform = { _, _ ->
+                                    tween(durationMillis = 1000, )
+                                }
+                            )
                     )
                 }
 
@@ -132,10 +145,10 @@ fun AvailableVehiclesCard(vehicles: List<Vehicles> = vehiclesList) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun HomePreview() {
-    ShipmentAppTheme {
-        HomeScreen()
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun HomePreview() {
+//    ShipmentAppTheme {
+//        HomeScreen()
+//    }
+//}

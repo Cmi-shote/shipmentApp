@@ -1,5 +1,9 @@
 package com.example.shipmentapp.presentation.search
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,9 +31,10 @@ import com.example.shipmentapp.models.sampleOrders
 import com.example.shipmentapp.presentation.components.SearchBar
 import com.example.shipmentapp.ui.theme.ShipmentAppTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
-fun SearchScreen(
+fun SharedTransitionScope.SearchScreen(
+    animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
     orders: List<Order> = sampleOrders,
     onBackClick: () -> Unit = {}
@@ -42,7 +47,15 @@ fun SearchScreen(
                         showBackIcon = true,
                         onSearchBarClick = { },
                         onBackClick = onBackClick,
-                        modifier = Modifier.padding(end = 16.dp),
+                        modifier = Modifier
+                            .padding(end = 16.dp)
+                            .sharedElement(
+                                sharedContentState = rememberSharedContentState(key = "searchK"),
+                                animatedVisibilityScope = animatedVisibilityScope,
+                                boundsTransform = { _, _ ->
+                                    tween(durationMillis = 1000)
+                                }
+                            ),
                         placeholder = "#NEJ200899"
                     )
                 },
@@ -88,10 +101,10 @@ fun SearchScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewSearchScreen(modifier: Modifier = Modifier) {
-    ShipmentAppTheme {
-        SearchScreen()
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun PreviewSearchScreen(modifier: Modifier = Modifier) {
+//    ShipmentAppTheme {
+//        SearchScreen()
+//    }
+//}

@@ -48,22 +48,34 @@ data class TabItem(
 
 val sampleOrders = listOf(
     Order(
-        itemName = "Shirt",
-        orderNumber = "123456789",
-        pickupLocation = "Atlanta",
-        dropOffLocation = "Chicago"
+        itemName = "Mackbook pro M2",
+        orderNumber = "#NEA43857340857904",
+        pickupLocation = "Paris",
+        dropOffLocation = "Morocco"
     ),
     Order(
-        itemName = "Shoes",
-        orderNumber = "987654321",
-        pickupLocation = "New York",
-        dropOffLocation = "Los Angeles",
+        itemName = "Summer linen jacket",
+        orderNumber = "#NEJ20089934122231",
+        pickupLocation = "Barcelona",
+        dropOffLocation = "Paris",
     ),
     Order(
-        itemName = "Jacket",
-        orderNumber = "456789123",
-        pickupLocation = "San Francisco",
-        dropOffLocation = "Miami"
+        itemName = "Tapered-fit jeans AW",
+        orderNumber = "#NEJ35870264978659",
+        pickupLocation = "Columbia",
+        dropOffLocation = "Paris"
+    ),
+    Order(
+        itemName = "Slim fit jeans AW",
+        orderNumber = "#NEJ35870264978659",
+        pickupLocation = "Bogota",
+        dropOffLocation = "Dhaka"
+    ),
+    Order(
+        itemName = "Office setup desk",
+        orderNumber = "#NEJ23481570754963",
+        pickupLocation = "France",
+        dropOffLocation = "German"
     )
 )
 
