@@ -31,11 +31,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.shipmentapp.R
 import com.example.shipmentapp.models.Shipment
 import com.example.shipmentapp.models.ShipmentStatus
 import com.example.shipmentapp.models.sampleShipments
@@ -136,7 +138,7 @@ fun ShipmentCard(
                             modifier = Modifier
                                 .size(24.dp)
                                 .background(
-                                    Color(0xFFF97316),
+                                    colorResource(id = R.color.app_color_orange),
                                     RoundedCornerShape(4.dp)
                                 ),
                             contentAlignment = Alignment.Center
