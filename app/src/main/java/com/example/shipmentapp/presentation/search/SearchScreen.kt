@@ -48,12 +48,11 @@ fun SharedTransitionScope.SearchScreen(
     orders: List<Order> = sampleOrders,
     onBackClick: () -> Unit = {}
 ) {
-    // State to control the fade-in animation
     var isCardVisible by remember { mutableStateOf(false) }
 
     // Trigger the animation when the composable is first composed
     LaunchedEffect(Unit) {
-        delay(300) // Optional: Add a small delay before showing the card
+        delay(300) // a small delay before showing the card
         isCardVisible = true
     }
 
@@ -126,105 +125,6 @@ fun SharedTransitionScope.SearchScreen(
                                     color = Color.LightGray.copy(alpha = 0.5f)
                                 )
                             }
-                            ShipmentInfoCard(
-                                order = order
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-// Alternative version with staggered animation for individual items
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
-@Composable
-fun SharedTransitionScope.SearchScreenWithStaggeredAnimation(
-    animatedVisibilityScope: AnimatedVisibilityScope,
-    modifier: Modifier = Modifier,
-    orders: List<Order> = sampleOrders,
-    onBackClick: () -> Unit = {}
-) {
-    // State to control individual item animations
-    val itemVisibilityStates = remember {
-        mutableStateOf(List(orders.size) { false })
-    }
-
-    // Trigger staggered animations
-    LaunchedEffect(Unit) {
-        delay(300) // Initial delay
-        orders.forEachIndexed { index, _ ->
-            delay(100) // Stagger delay between items
-            val currentList = itemVisibilityStates.value.toMutableList()
-            currentList[index] = true
-            itemVisibilityStates.value = currentList
-        }
-    }
-
-    LazyColumn(modifier = modifier) {
-        item {
-            TopAppBar(
-                title = {
-                    SearchBar(
-                        showBackIcon = true,
-                        onSearchBarClick = { },
-                        onBackClick = onBackClick,
-                        modifier = Modifier
-                            .padding(end = 16.dp)
-                            .sharedElement(
-                                sharedContentState = rememberSharedContentState(key = "searchK"),
-                                animatedVisibilityScope = animatedVisibilityScope,
-                                boundsTransform = { _, _ ->
-                                    tween(durationMillis = 1000)
-                                }
-                            ),
-                        placeholder = "#NEJ200899"
-                    )
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = colorResource(id = R.color.app_color_purple)
-                )
-            )
-        }
-
-        item {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(16.dp)
-                    .background(colorResource(id = R.color.app_color_purple))
-            )
-        }
-
-        item {
-            Spacer(modifier = Modifier.height(16.dp))
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White)
-            ) {
-                Column {
-                    orders.forEachIndexed { index, order ->
-                        if (index != 0) {
-                            HorizontalDivider(
-                                modifier = Modifier.padding(horizontal = 24.dp),
-                                color = Color.LightGray.copy(alpha = 0.5f)
-                            )
-                        }
-
-                        // Animate each individual item
-                        AnimatedVisibility(
-                            visible = itemVisibilityStates.value.getOrElse(index) { false },
-                            enter = fadeIn(
-                                animationSpec = tween(durationMillis = 400)
-                            ) + slideInVertically(
-                                animationSpec = tween(durationMillis = 400),
-                                initialOffsetY = { it / 6 }
-                            )
-                        ) {
                             ShipmentInfoCard(
                                 order = order
                             )
