@@ -1,9 +1,14 @@
 package com.example.shipmentapp.presentation.home
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,14 +20,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -40,6 +49,7 @@ import com.example.shipmentapp.presentation.components.SearchBar
 import com.example.shipmentapp.presentation.components.ShipmentCard
 import com.example.shipmentapp.presentation.components.VehiclesCard
 import com.example.shipmentapp.ui.theme.ShipmentAppTheme
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -53,59 +63,104 @@ fun SharedTransitionScope.HomeScreen(
 ) {
     var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
 
+    // Animation states
+    var isTopSectionVisible by remember { mutableStateOf(false) }
+    var isContentVisible by remember { mutableStateOf(false) }
+
+    // Trigger animations with staggered delays
+    LaunchedEffect(Unit) {
+        delay(100) // Small initial delay
+        isTopSectionVisible = true
+        delay(200) // Delay between top section and content
+        isContentVisible = true
+    }
+
     Scaffold(
-        modifier = modifier
-            .fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         topBar = {
-            HomePageToolbar()
+            // Animated TopBar - slides down and fades in
+            AnimatedVisibility(
+                visible = isTopSectionVisible,
+                enter = fadeIn(
+                    animationSpec = tween(durationMillis = 600)
+                ) + slideInVertically(
+                    animationSpec = tween(durationMillis = 600),
+                    initialOffsetY = { -it } // Slide from above (negative offset)
+                )
+            ) {
+                HomePageToolbar()
+            }
         },
         content = { paddingValues ->
-            Column(modifier = Modifier.padding(paddingValues)){
-                Box(
-                    modifier = Modifier
-                        .background(color = colorResource(id = R.color.app_color_purple))
-                ) {
-                    SearchBar(
-                        onSearchBarClick = onSearchBarClick,
-                        readOnly = true,
-                        modifier = Modifier.padding(16.dp)
-                            .sharedElement(
-                                sharedContentState = rememberSharedContentState(key= "searchK"),
-                                animatedVisibilityScope = animatedVisibilityScope,
-                                boundsTransform = { _, _ ->
-                                    tween(durationMillis = 1000, )
-                                }
-                            )
+            Column(modifier = Modifier.padding(paddingValues)) {
+                // Animated Search Bar Section - slides down and fades in
+                AnimatedVisibility(
+                    visible = isTopSectionVisible,
+                    enter = fadeIn(
+                        animationSpec = tween(durationMillis = 600, delayMillis = 100)
+                    ) + slideInVertically(
+                        animationSpec = tween(durationMillis = 600, delayMillis = 100),
+                        initialOffsetY = { -it / 2 } // Slide from above with less distance
                     )
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .background(color = colorResource(id = R.color.app_color_purple))
+                    ) {
+                        SearchBar(
+                            onSearchBarClick = onSearchBarClick,
+                            readOnly = true,
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .sharedElement(
+                                    sharedContentState = rememberSharedContentState(key = "searchK"),
+                                    animatedVisibilityScope = animatedVisibilityScope,
+                                    boundsTransform = { _, _ ->
+                                        tween(durationMillis = 1000)
+                                    }
+                                )
+                        )
+                    }
                 }
 
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .verticalScroll(rememberScrollState())
+                // Animated Content Section - slides up and fades in
+                AnimatedVisibility(
+                    visible = isContentVisible,
+                    enter = fadeIn(
+                        animationSpec = tween(durationMillis = 700)
+                    ) + slideInVertically(
+                        animationSpec = tween(durationMillis = 700),
+                        initialOffsetY = { it / 2 } // Slide from below (positive offset)
+                    )
                 ) {
+                    Column(
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .verticalScroll(rememberScrollState())
+                    ) {
+                        Text(
+                            text = "Tracking",
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Medium,
+                        )
 
-                    Text(
-                        text = "Tracking",
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Medium,
-                    )
+                        Spacer(modifier = Modifier.height(8.dp))
 
-                    Spacer(modifier = Modifier.height(8.dp))
+                        ShipmentCard(shipment = shipment)
 
-                    ShipmentCard(shipment = shipment)
+                        Spacer(modifier = Modifier.height(32.dp))
 
-                    Spacer(modifier = Modifier.height(32.dp))
+                        Text(
+                            text = "Available vehicles",
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Medium,
+                        )
 
-                    Text(
-                        text = "Available vehicles",
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Medium,
-                    )
+                        Spacer(modifier = Modifier.height(8.dp))
 
-                    Spacer(modifier = Modifier.height(8.dp))
-                    // Available vehicles
-                    AvailableVehiclesCard()
+                        // Available vehicles
+                        AvailableVehiclesCard()
+                    }
                 }
             }
         },
@@ -127,20 +182,187 @@ fun SharedTransitionScope.HomeScreen(
     )
 }
 
+// Alternative version with more granular animations for individual elements
+@OptIn(ExperimentalSharedTransitionApi::class)
+@Composable
+fun SharedTransitionScope.HomeScreenWithDetailedAnimations(
+    animatedVisibilityScope: AnimatedVisibilityScope,
+    modifier: Modifier = Modifier,
+    shipment: Shipment = sampleShipments[1],
+    onSearchBarClick: () -> Unit = {},
+    navigateToCalculateScreen: () -> Unit = {},
+    navigateToShipmentHistoryScreen: () -> Unit = {}
+) {
+    var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
+
+    // Individual animation states for more granular control
+    var isTopBarVisible by remember { mutableStateOf(false) }
+    var isSearchBarVisible by remember { mutableStateOf(false) }
+    var isTrackingVisible by remember { mutableStateOf(false) }
+    var isShipmentCardVisible by remember { mutableStateOf(false) }
+    var isVehiclesVisible by remember { mutableStateOf(false) }
+
+    // Staggered animation triggers
+    LaunchedEffect(Unit) {
+        delay(100)
+        isTopBarVisible = true
+        delay(150)
+        isSearchBarVisible = true
+        delay(200)
+        isTrackingVisible = true
+        delay(150)
+        isShipmentCardVisible = true
+        delay(150)
+        isVehiclesVisible = true
+    }
+
+    Scaffold(
+        modifier = modifier.fillMaxSize(),
+        topBar = {
+            AnimatedVisibility(
+                visible = isTopBarVisible,
+                enter = fadeIn(tween(500)) + slideInVertically(
+                    tween(500), initialOffsetY = { -it }
+                )
+            ) {
+                HomePageToolbar()
+            }
+        },
+        content = { paddingValues ->
+            Column(modifier = Modifier.padding(paddingValues)) {
+                AnimatedVisibility(
+                    visible = isSearchBarVisible,
+                    enter = fadeIn(tween(500)) + slideInVertically(
+                        tween(500), initialOffsetY = { -it / 3 }
+                    )
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .background(color = colorResource(id = R.color.app_color_purple))
+                    ) {
+                        SearchBar(
+                            onSearchBarClick = onSearchBarClick,
+                            readOnly = true,
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .sharedElement(
+                                    sharedContentState = rememberSharedContentState(key = "searchK"),
+                                    animatedVisibilityScope = animatedVisibilityScope,
+                                    boundsTransform = { _, _ ->
+                                        tween(durationMillis = 1000)
+                                    }
+                                )
+                        )
+                    }
+                }
+
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    AnimatedVisibility(
+                        visible = isTrackingVisible,
+                        enter = fadeIn(tween(400)) + slideInVertically(
+                            tween(400), initialOffsetY = { it / 4 }
+                        )
+                    ) {
+                        Column {
+                            Text(
+                                text = "Tracking",
+                                style = MaterialTheme.typography.titleLarge,
+                                fontWeight = FontWeight.Medium,
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                        }
+                    }
+
+                    AnimatedVisibility(
+                        visible = isShipmentCardVisible,
+                        enter = fadeIn(tween(500)) + slideInVertically(
+                            tween(500), initialOffsetY = { it / 3 }
+                        )
+                    ) {
+                        Column {
+                            ShipmentCard(shipment = shipment)
+                            Spacer(modifier = Modifier.height(32.dp))
+                        }
+                    }
+
+                    AnimatedVisibility(
+                        visible = isVehiclesVisible,
+                        enter = fadeIn(tween(600)) + slideInVertically(
+                            tween(600), initialOffsetY = { it / 3 }
+                        )
+                    ) {
+                        Column {
+                            Text(
+                                text = "Available vehicles",
+                                style = MaterialTheme.typography.titleLarge,
+                                fontWeight = FontWeight.Medium,
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            AvailableVehiclesCard()
+                        }
+                    }
+                }
+            }
+        },
+        bottomBar = {
+            BottomNavigationBar(
+                selectedTabIndex = selectedTabIndex,
+                onTabSelected = { index ->
+                    selectedTabIndex = index
+                    when (index) {
+                        0 -> { /* Already on Home */ }
+                        1 -> navigateToCalculateScreen()
+                        2 -> navigateToShipmentHistoryScreen()
+                        3 -> { /* not shown */ }
+                    }
+                }
+            )
+        }
+    )
+}
+
 @Composable
 fun AvailableVehiclesCard(vehicles: List<Vehicles> = vehiclesList) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        items(vehicles) { vehicle ->
-            VehiclesCard(
-                title = vehicle.vehicleType,
-                subtitle = vehicle.desc,
-                image = vehicle.image,
-                modifier = Modifier
-                    .height(200.dp)
-                    .width(170.dp)
-            )
+        itemsIndexed(vehicles) { index, vehicle ->
+            var isVisible by remember { mutableStateOf(false) }
+
+            // Trigger animation with staggered delay
+            LaunchedEffect(Unit) {
+                delay(index * 100L) // 100ms delay between each item
+                isVisible = true
+            }
+
+            AnimatedVisibility(
+                visible = isVisible,
+                enter = slideInHorizontally(
+                    initialOffsetX = { fullWidth -> fullWidth }, // Start from right
+                    animationSpec = tween(
+                        durationMillis = 500,
+                        easing = FastOutSlowInEasing
+                    )
+                ) + fadeIn(
+                    animationSpec = tween(
+                        durationMillis = 500,
+                        easing = FastOutSlowInEasing
+                    )
+                )
+            ) {
+                VehiclesCard(
+                    title = vehicle.vehicleType,
+                    subtitle = vehicle.desc,
+                    image = vehicle.image,
+                    modifier = Modifier
+                        .height(200.dp)
+                        .width(170.dp)
+                )
+            }
         }
     }
 }
