@@ -7,8 +7,6 @@ import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 
 @Composable
 fun CustomOutlineField(
@@ -31,7 +29,7 @@ fun CustomOutlineField(
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
-        textStyle = MaterialTheme.typography.titleLarge,
+        textStyle = MaterialTheme.typography.bodyLarge,
         singleLine = singleLine,
         modifier = modifier,
         leadingIcon = leadingIcon,

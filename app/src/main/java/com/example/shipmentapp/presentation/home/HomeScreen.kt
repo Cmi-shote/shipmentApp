@@ -35,6 +35,7 @@ import com.example.shipmentapp.presentation.components.BottomNavigationBar
 import com.example.shipmentapp.presentation.components.SearchBar
 import com.example.shipmentapp.presentation.components.ShipmentCard
 import com.example.shipmentapp.presentation.components.VehiclesCard
+import com.example.shipmentapp.ui.theme.ShipmentAppTheme
 
 @Composable
 fun HomeScreen(
@@ -134,5 +135,7 @@ fun AvailableVehiclesCard(vehicles: List<Vehicles> = vehiclesList) {
 @Preview(showBackground = true)
 @Composable
 fun HomePreview() {
-    HomeScreen()
+    ShipmentAppTheme {
+        HomeScreen()
+    }
 }

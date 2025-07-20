@@ -40,7 +40,8 @@ fun SearchScreen(
                 title = {
                     SearchBar(
                         showBackIcon = true,
-                        onSearchBarClick = onBackClick,
+                        onSearchBarClick = { },
+                        onBackClick = onBackClick,
                         modifier = Modifier.padding(end = 16.dp),
                         placeholder = "#NEJ200899"
                     )
