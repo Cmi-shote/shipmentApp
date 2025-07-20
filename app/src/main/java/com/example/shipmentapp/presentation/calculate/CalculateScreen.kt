@@ -30,11 +30,14 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -45,13 +48,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.shipmentapp.R
 import com.example.shipmentapp.presentation.components.CustomOutlineField
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CalculateScreen(
     modifier: Modifier = Modifier,
@@ -65,7 +71,28 @@ fun CalculateScreen(
             .fillMaxSize()
     ) {
         // Header
-        CalculateHeader(onBackClick = onBackClick)
+        TopAppBar(
+            title = {
+                Text(
+                    text = "Shipment history",
+                    color = Color.White,
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Medium
+                )
+            },
+            navigationIcon = {
+                IconButton(onClick = onBackClick) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBackIosNew,
+                        contentDescription = "Back",
+                        tint = Color.White
+                    )
+                }
+            },
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor =colorResource(id = R.color.app_color_purple)
+            )
+        )
 
         // Content
         LazyColumn(
@@ -96,42 +123,6 @@ fun CalculateScreen(
             onClick = onCalculateClick,
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 32.dp)
         )
-    }
-}
-
-@Composable
-fun CalculateHeader(
-    onBackClick: () -> Unit
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color(0xFF543B9C))
-            .padding(vertical = 12.dp)
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(onClick = onBackClick) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBackIosNew,
-                    contentDescription = "Back",
-                    tint = Color.White
-                )
-            }
-
-            Text(
-                text = "Calculate",
-                color = Color.White,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(end = 48.dp),
-                textAlign = TextAlign.Center
-            )
-        }
     }
 }
 
@@ -385,7 +376,7 @@ fun CalculateButton(
             .fillMaxWidth()
             .height(56.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color(0xFFFF8C00)
+            containerColor = colorResource(id = R.color.app_color_orange)
         ),
         shape = RoundedCornerShape(28.dp)
     ) {

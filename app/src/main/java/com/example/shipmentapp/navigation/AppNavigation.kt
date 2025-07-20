@@ -28,6 +28,7 @@ import androidx.navigation.compose.composable
 import com.example.shipmentapp.presentation.calculate.CalculateScreen
 import com.example.shipmentapp.presentation.home.HomeScreen
 import com.example.shipmentapp.presentation.search.SearchScreen
+import com.example.shipmentapp.presentation.shipmentHistory.ShipmentHistoryScreen
 
 @Composable
 fun AppNavigation(navController: NavHostController) {
@@ -41,6 +42,14 @@ fun AppNavigation(navController: NavHostController) {
 
         composable<AppRoute.SearchScreen> {
             SearchScreen()
+        }
+
+        composable<AppRoute.CalculateScreen> {
+            CalculateScreen()
+        }
+
+        composable<AppRoute.ShipmentHistoryScreen> {
+            ShipmentHistoryScreen()
         }
     }
 }
@@ -61,7 +70,7 @@ fun MainScreenWithBottomNav(navController: NavHostController) {
                 0 -> {
                     // Groups screen content
                     HomeScreen(
-                        modifier = Modifier.padding(paddingValues),
+//                        modifier = Modifier.padding(paddingValues),
                         onSearchBarClick = {
                             navController.navigate(AppRoute.SearchScreen)
                         }
@@ -69,16 +78,11 @@ fun MainScreenWithBottomNav(navController: NavHostController) {
                 }
 
                 1 -> {
-                    CalculateScreen(
-                        modifier = Modifier.padding(paddingValues),
-                    )
+                   navController.navigate(AppRoute.CalculateScreen)
                 }
 
                 2 -> {
-                    Text(
-                        "Shipment Screen",
-                        modifier = Modifier.padding(paddingValues)
-                    )
+                    navController.navigate(AppRoute.ShipmentHistoryScreen)
                 }
 
                 3 -> {

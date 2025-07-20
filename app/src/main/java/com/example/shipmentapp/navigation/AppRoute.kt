@@ -9,4 +9,9 @@ sealed interface AppRoute {
     @Serializable
     data object SearchScreen : AppRoute
 
+    @Serializable
+    data object CalculateScreen : AppRoute
+
+    @Serializable
+    data object ShipmentHistoryScreen : AppRoute
 }

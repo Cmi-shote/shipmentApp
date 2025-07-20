@@ -37,7 +37,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.shipmentapp.models.Shipment
-import com.example.shipmentapp.models.sampleCard
+import com.example.shipmentapp.models.ShipmentStatus
+import com.example.shipmentapp.models.sampleShipments
 import com.example.shipmentapp.ui.theme.ShipmentAppTheme
 
 @Composable
@@ -259,7 +260,7 @@ fun ShipmentCard(
                         )
                     )
                     Text(
-                        text = shipment.status,
+                        text = if (shipment.status == ShipmentStatus.PENDING) "Waiting To Collect" else "In Transit",
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }
@@ -306,7 +307,7 @@ fun ShipmentCard(
 fun ShipmentCardPreview() {
     ShipmentAppTheme {
         ShipmentCard(
-            shipment = sampleCard
+            shipment = sampleShipments[0]
         )
     }
 }

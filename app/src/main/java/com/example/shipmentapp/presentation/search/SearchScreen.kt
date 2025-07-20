@@ -15,8 +15,10 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.shipmentapp.R
 import com.example.shipmentapp.models.Order
 import com.example.shipmentapp.models.sampleOrders
 import com.example.shipmentapp.presentation.components.SearchBar
@@ -30,7 +32,7 @@ fun SearchScreen(
         item {
             Box(
                 modifier = Modifier
-                    .background(color = Color(0xFF543B9C))
+                    .background(color = colorResource(id = R.color.app_color_purple))
                     .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
             ) {
                 SearchBar(

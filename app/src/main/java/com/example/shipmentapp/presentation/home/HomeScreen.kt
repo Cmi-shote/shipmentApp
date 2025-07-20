@@ -18,12 +18,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.shipmentapp.R
 import com.example.shipmentapp.models.Shipment
 import com.example.shipmentapp.models.Vehicles
-import com.example.shipmentapp.models.sampleCard
+import com.example.shipmentapp.models.sampleShipments
 import com.example.shipmentapp.models.vehiclesList
 import com.example.shipmentapp.presentation.components.SearchBar
 import com.example.shipmentapp.presentation.components.ShipmentCard
@@ -32,7 +34,7 @@ import com.example.shipmentapp.presentation.components.VehiclesCard
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    shipment: Shipment = sampleCard,
+    shipment: Shipment = sampleShipments[0],
     onSearchBarClick: () -> Unit = {}
 ) {
     Column(
@@ -42,19 +44,17 @@ fun HomeScreen(
 
         Box(
             modifier = Modifier
-                .background(color = Color(0xFF543B9C))
-                .padding(16.dp)
+                .background(color = colorResource(id = R.color.app_color_purple))
         ) {
             // TODO: Add tracking info as shown in the design
 
             Column {
                 HomePageToolbar()
 
-                Spacer(modifier = Modifier.height(24.dp))
-
                 SearchBar(
                     onSearchBarClick = onSearchBarClick,
-                    readOnly = true
+                    readOnly = true,
+                    modifier = Modifier.padding(16.dp)
                 )
             }
         }
