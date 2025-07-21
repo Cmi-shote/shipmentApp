@@ -46,6 +46,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
@@ -108,53 +109,83 @@ fun ShipmentHistoryScreen(
 //            }
         },
         content = { paddingValues ->
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
-            ) {
-                // Custom Tab Row
-                item {
-                    Box(modifier = Modifier.background(colorResource(id = R.color.app_color_purple)).padding()) {
-                        ShipmentTabRow(
-                            tabs = tabs,
-                            selectedTabIndex = selectedTabIndex,
-                            onTabSelected = { selectedTabIndex = it },
-                            isTabRowVisible = isTabRowVisible
-                        )
-                    }
-                }
-
-                item {
-                    Text(
-                        text = "Shipments",
-                        fontSize = 20.sp,
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(16.dp),
-                    )
-                }
-
-                itemsIndexed(shipments) { index, shipment ->
-                    AnimatedVisibility(
-                        visible = isCardVisible,
-                        enter = fadeIn(
-                            animationSpec = tween(
-                                durationMillis = 600,
-                                delayMillis = index * 100 // Stagger the animation
+            Box(modifier = Modifier.fillMaxSize()) {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues),
+                ) {
+                    // Custom Tab Row
+                    item {
+                        Box(
+                            modifier = Modifier.background(colorResource(id = R.color.app_color_purple))
+                                .padding()
+                        ) {
+                            ShipmentTabRow(
+                                tabs = tabs,
+                                selectedTabIndex = selectedTabIndex,
+                                onTabSelected = { selectedTabIndex = it },
+                                isTabRowVisible = isTabRowVisible
                             )
-                        ) + slideInVertically(
-                            animationSpec = tween(
-                                durationMillis = 600,
-                                delayMillis = index * 100
-                            ),
-                            initialOffsetY = { it / 4 } // Slide in from 25% down
+                        }
+                    }
+
+                    item {
+                        Text(
+                            text = "Shipments",
+                            fontSize = 20.sp,
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(16.dp),
                         )
-                    ) {
-                        ShipmentCard(shipment = shipment, modifier = Modifier.padding(horizontal = 16.dp))
-                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+
+                    itemsIndexed(shipments) { index, shipment ->
+                        AnimatedVisibility(
+                            visible = isCardVisible,
+                            enter = fadeIn(
+                                animationSpec = tween(
+                                    durationMillis = 600,
+                                    delayMillis = index * 100 // Stagger the animation
+                                )
+                            ) + slideInVertically(
+                                animationSpec = tween(
+                                    durationMillis = 600,
+                                    delayMillis = index * 100
+                                ),
+                                initialOffsetY = { it / 4 } // Slide in from 25% down
+                            )
+                        ) {
+                            ShipmentCard(
+                                shipment = shipment,
+                                modifier = Modifier.padding(
+                                    start = 16.dp,
+                                    end = 16.dp,
+                                    bottom = 16.dp
+                                )
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                        }
                     }
                 }
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(80.dp)
+                        .align(Alignment.BottomCenter)
+                        .background(
+                            brush = Brush.verticalGradient(
+                                colors = listOf(
+                                    Color.Transparent,
+                                    Color.White.copy(alpha = 0.8f),
+                                    Color.White
+                                ),
+                                startY = 0f,
+                                endY = Float.POSITIVE_INFINITY
+                            )
+                        )
+                )
             }
         }
     )
