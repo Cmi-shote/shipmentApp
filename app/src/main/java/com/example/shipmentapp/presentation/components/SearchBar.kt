@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,6 +17,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Flip
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -57,66 +60,82 @@ fun SearchBar(
             Spacer(modifier = Modifier.width(12.dp))
         }
 
-        Row(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-                    .background(Color.White, RoundedCornerShape(28.dp))
-                    .padding(horizontal = 16.dp)
-                    .clickable {
-                        onSearchBarClick()
-                    },
-            verticalAlignment = Alignment.CenterVertically,
+        Card(
+            shape = RoundedCornerShape(28.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp)
+                .clickable(enabled = readOnly) { onSearchBarClick() },
+            colors = CardDefaults.cardColors(containerColor = Color.White),
+            elevation = CardDefaults.cardElevation(2.dp)
         ) {
-            // Search Icon
-            Icon(
-                imageVector = Icons.Default.Search,
-                contentDescription = "Search",
-                tint = Color(0xFF8A8A8A),
-                modifier = Modifier.size(24.dp),
-            )
-
-            Spacer(modifier = Modifier.width(12.dp))
-
-            // Search TextField
-            Box(
-                modifier = Modifier.weight(1f),
-                contentAlignment = Alignment.CenterStart,
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                CustomOutlineField(
-                    value = searchQuery,
-                    onValueChange = onSearchQueryChange,
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth(),
-                    readOnly = readOnly,
-                    placeholder = { Text(text = placeholder, style = MaterialTheme.typography.bodyMedium, color = Color.Gray) },
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = "Search",
+                    tint = Color(0xFF8A8A8A),
+                    modifier = Modifier.size(24.dp),
                 )
-            }
 
-            Spacer(modifier = Modifier.width(12.dp))
+                Spacer(modifier = Modifier.width(12.dp))
 
-            // Action Button
-            Box(
-                modifier =
-                    Modifier
+                Box(
+                    modifier = Modifier.weight(1f),
+                    contentAlignment = Alignment.CenterStart,
+                ) {
+                    // Conditionally render Text vs Field
+                    if (readOnly) {
+                        Text(
+                            text = if (searchQuery.isEmpty()) placeholder else searchQuery,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = if (searchQuery.isEmpty()) Color.Gray else Color.Black,
+                        )
+                    } else {
+                        CustomOutlineField(
+                            value = searchQuery,
+                            onValueChange = onSearchQueryChange,
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth(),
+                            readOnly = false,
+                            placeholder = {
+                                Text(
+                                    text = placeholder,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = Color.Gray
+                                )
+                            },
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.width(12.dp))
+
+                Box(
+                    modifier = Modifier
                         .size(40.dp)
                         .background(Color(0xFFFF9800), CircleShape),
-                contentAlignment = Alignment.Center,
-            ) {
-                IconButton(
-                    onClick = onActionClick,
-                    modifier = Modifier.size(40.dp),
+                    contentAlignment = Alignment.Center,
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.Flip,
-                        contentDescription = "Action",
-                        tint = Color.White,
-                        modifier = Modifier.size(20.dp).rotate(90f),
-                    )
+                    IconButton(
+                        onClick = onActionClick,
+                        modifier = Modifier.size(40.dp),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Flip,
+                            contentDescription = "Action",
+                            tint = Color.White,
+                            modifier = Modifier.size(20.dp).rotate(90f),
+                        )
+                    }
                 }
             }
         }
+
     }
 }
 
