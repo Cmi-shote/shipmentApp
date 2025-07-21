@@ -13,11 +13,10 @@ import kotlinx.coroutines.launch
 
 data class SearchUiState(
     val searchQuery: String = "",
-    val filteredOrders: List<Order> = sampleOrders
+    val filteredOrders: List<Order> = sampleOrders,
 )
 
 class SearchViewModel : ViewModel() {
-
     private val _uiState = MutableStateFlow(SearchUiState())
     val uiState: StateFlow<SearchUiState> = _uiState.asStateFlow()
 
@@ -25,13 +24,14 @@ class SearchViewModel : ViewModel() {
     private val allOrders = sampleOrders
 
     fun onSearchQueryChange(query: String) {
-        val filteredResults = if (query.isBlank()) {
-            allOrders // Show all orders when search is empty
-        } else {
-            allOrders.filter { order ->
-                order.orderNumber.lowercase().contains(query.lowercase())
+        val filteredResults =
+            if (query.isBlank()) {
+                allOrders // Show all orders when search is empty
+            } else {
+                allOrders.filter { order ->
+                    order.orderNumber.lowercase().contains(query.lowercase())
+                }
             }
-        }
 
         _uiState.update { it.copy(searchQuery = query, filteredOrders = emptyList()) }
         viewModelScope.launch {
@@ -41,9 +41,10 @@ class SearchViewModel : ViewModel() {
     }
 
     fun clearSearch() {
-        _uiState.value = _uiState.value.copy(
-            searchQuery = "",
-            filteredOrders = allOrders
-        )
+        _uiState.value =
+            _uiState.value.copy(
+                searchQuery = "",
+                filteredOrders = allOrders,
+            )
     }
 }

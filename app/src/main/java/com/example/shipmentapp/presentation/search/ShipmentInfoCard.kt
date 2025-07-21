@@ -11,10 +11,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.GifBox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -22,7 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,23 +33,25 @@ import com.example.shipmentapp.ui.theme.ShipmentAppTheme
 @Composable
 fun ShipmentInfoCard(
     modifier: Modifier = Modifier,
-    order: Order
+    order: Order,
 ) {
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(Color.White)
-            .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .background(Color.White)
+                .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
-            modifier = Modifier
-                .size(48.dp),
-            contentAlignment = Alignment.Center
+            modifier =
+                Modifier
+                    .size(48.dp),
+            contentAlignment = Alignment.Center,
         ) {
             Image(
                 painter = painterResource(R.drawable.box2),
-                contentDescription = "Package"
+                contentDescription = "Package",
             )
         }
         Spacer(modifier = Modifier.width(12.dp))
@@ -61,27 +60,27 @@ fun ShipmentInfoCard(
                 text = order.itemName,
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Medium,
-                color = Color.Black
+                color = Color.Black,
             )
             Spacer(modifier = Modifier.height(2.dp))
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
                     text = "${order.orderNumber} • ${order.pickupLocation} ",
                     color = Color(0xFF8A8A8A),
-                    fontSize = 14.sp
+                    fontSize = 14.sp,
                 )
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                     contentDescription = null,
                     tint = Color(0xFF8A8A8A),
-                    modifier = Modifier.size(14.dp)
+                    modifier = Modifier.size(14.dp),
                 )
                 Text(
                     text = " ${order.dropOffLocation}",
                     color = Color(0xFF8A8A8A),
-                    fontSize = 14.sp
+                    fontSize = 14.sp,
                 )
             }
         }
@@ -93,7 +92,7 @@ fun ShipmentInfoCard(
 fun CardPreview(modifier: Modifier = Modifier) {
     ShipmentAppTheme {
         ShipmentInfoCard(
-            order = sampleOrders[1]
+            order = sampleOrders[1],
         )
     }
 }

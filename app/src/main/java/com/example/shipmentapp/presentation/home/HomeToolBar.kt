@@ -2,13 +2,10 @@ package com.example.shipmentapp.presentation.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
@@ -28,7 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,7 +38,7 @@ import com.example.shipmentapp.ui.theme.ShipmentAppTheme
 @Composable
 fun HomePageToolbar(
     modifier: Modifier = Modifier,
-    user: User = sampleUser
+    user: User = sampleUser,
 ) {
     TopAppBar(
         title = {
@@ -50,11 +46,12 @@ fun HomePageToolbar(
                 Image(
                     painter = painterResource(id = user.avatar),
                     contentDescription = "Profile Picture",
-                    modifier = Modifier
-                        .size(50.dp)
-                        .clip(CircleShape)
-                        .background(Color.Gray),
-                    contentScale = ContentScale.Crop
+                    modifier =
+                        Modifier
+                            .size(50.dp)
+                            .clip(CircleShape)
+                            .background(Color.Gray),
+                    contentScale = ContentScale.Crop,
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Column {
@@ -63,20 +60,20 @@ fun HomePageToolbar(
                             Icons.Default.NearMe,
                             contentDescription = "Settings",
                             modifier = Modifier.size(16.dp),
-                            tint = Color.White.copy(alpha = 0.7f)
+                            tint = Color.White.copy(alpha = 0.7f),
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
                             "Your location",
                             style = MaterialTheme.typography.bodySmall,
-                            color = Color.White.copy(alpha = 0.7f)
+                            color = Color.White.copy(alpha = 0.7f),
                         )
                     }
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         user.location,
                         style = MaterialTheme.typography.bodyLarge,
-                        color = Color.White
+                        color = Color.White,
                     )
                 }
             }
@@ -84,22 +81,24 @@ fun HomePageToolbar(
         actions = {
             IconButton(
                 onClick = {},
-                modifier = Modifier
-                    .size(40.dp)
-                    .background(Color.White, CircleShape)
+                modifier =
+                    Modifier
+                        .size(40.dp)
+                        .background(Color.White, CircleShape),
             ) {
                 Icon(
                     Icons.Outlined.Notifications,
                     contentDescription = "Settings",
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(24.dp),
                 )
             }
             Spacer(modifier = Modifier.width(12.dp))
         },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = colorResource(id = R.color.app_color_purple)
-        ),
-        modifier = modifier
+        colors =
+            TopAppBarDefaults.topAppBarColors(
+                containerColor = colorResource(id = R.color.app_color_purple),
+            ),
+        modifier = modifier,
     )
 }
 

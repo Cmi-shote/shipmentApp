@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
                     SharedTransitionLayout {
                         AppNavigation(
                             navController = navController,
-                            animatedVisibilityScope = this
+                            animatedVisibilityScope = this,
                         )
                     }
                 }

@@ -45,7 +45,7 @@ fun SharedTransitionScope.SearchScreen(
     animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit = {},
-    viewModel: SearchViewModel = viewModel()
+    viewModel: SearchViewModel = viewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var isCardVisible by remember { mutableStateOf(false) }
@@ -67,42 +67,44 @@ fun SharedTransitionScope.SearchScreen(
 
     LazyColumn(modifier = modifier) {
         item {
-                TopAppBar(
-                    title = {
-                        SearchBar(
-                            searchQuery = uiState.searchQuery,
-                            showBackIcon = true,
-                            onSearchQueryChange = viewModel::onSearchQueryChange,
-                            onSearchBarClick = { },
-                            onBackClick = {
-                                viewModel.clearSearch()
-                                onBackClick()
-                            },
-                            modifier = Modifier
+            TopAppBar(
+                title = {
+                    SearchBar(
+                        searchQuery = uiState.searchQuery,
+                        showBackIcon = true,
+                        onSearchQueryChange = viewModel::onSearchQueryChange,
+                        onSearchBarClick = { },
+                        onBackClick = {
+                            viewModel.clearSearch()
+                            onBackClick()
+                        },
+                        modifier =
+                            Modifier
                                 .padding(end = 16.dp)
                                 .sharedElement(
                                     sharedContentState = rememberSharedContentState(key = "searchK"),
                                     animatedVisibilityScope = animatedVisibilityScope,
                                     boundsTransform = { _, _ ->
                                         tween(durationMillis = 1000)
-                                    }
+                                    },
                                 ),
-                            placeholder = "#NEJ200899"
-                        )
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = colorResource(id = R.color.app_color_purple)
+                        placeholder = "#NEJ200899",
                     )
-                )
-//
+                },
+                colors =
+                    TopAppBarDefaults.topAppBarColors(
+                        containerColor = colorResource(id = R.color.app_color_purple),
+                    ),
+            )
         }
 
         item {
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(16.dp)
-                    .background(colorResource(id = R.color.app_color_purple))
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .height(16.dp)
+                        .background(colorResource(id = R.color.app_color_purple)),
             )
         }
 
@@ -112,39 +114,45 @@ fun SharedTransitionScope.SearchScreen(
             // Animated Card with fade-in effect
             AnimatedVisibility(
                 visible = isCardVisible,
-                enter = fadeIn(
-                    animationSpec = tween(
-                        durationMillis = 600,
-                        delayMillis = 0
-                    )
-                ) + slideInVertically(
-                    animationSpec = tween(
-                        durationMillis = 600,
-                        delayMillis = 0
+                enter =
+                    fadeIn(
+                        animationSpec =
+                            tween(
+                                durationMillis = 600,
+                                delayMillis = 0,
+                            ),
+                    ) +
+                        slideInVertically(
+                            animationSpec =
+                                tween(
+                                    durationMillis = 600,
+                                    delayMillis = 0,
+                                ),
+                            initialOffsetY = { it / 4 }, // Slide in from 25% down
+                        ),
+                exit =
+                    fadeOut(
+                        animationSpec = tween(durationMillis = 100),
                     ),
-                    initialOffsetY = { it / 4 } // Slide in from 25% down
-                ),
-                exit = fadeOut(
-                    animationSpec = tween(durationMillis = 100)
-                )
             ) {
                 Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp),
                     shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White)
+                    colors = CardDefaults.cardColors(containerColor = Color.White),
                 ) {
                     Column {
                         uiState.filteredOrders.forEachIndexed { index, order ->
                             if (index != 0) {
                                 HorizontalDivider(
                                     modifier = Modifier.padding(horizontal = 24.dp),
-                                    color = Color.LightGray.copy(alpha = 0.5f)
+                                    color = Color.LightGray.copy(alpha = 0.5f),
                                 )
                             }
                             ShipmentInfoCard(
-                                order = order
+                                order = order,
                             )
                         }
                     }
@@ -154,10 +162,10 @@ fun SharedTransitionScope.SearchScreen(
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun PreviewSearchScreen(modifier: Modifier = Modifier) {
+// @Preview(showBackground = true)
+// @Composable
+// fun PreviewSearchScreen(modifier: Modifier = Modifier) {
 //    ShipmentAppTheme {
 //        SearchScreen()
 //    }
-//}
+// }

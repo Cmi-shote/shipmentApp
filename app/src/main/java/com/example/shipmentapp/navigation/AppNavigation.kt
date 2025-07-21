@@ -15,14 +15,17 @@ import com.example.shipmentapp.presentation.shipmentHistory.ShipmentHistoryScree
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun AppNavigation(navController: NavHostController, animatedVisibilityScope: SharedTransitionScope) {
+fun AppNavigation(
+    navController: NavHostController,
+    animatedVisibilityScope: SharedTransitionScope,
+) {
     NavHost(
         navController,
-        startDestination = AppRoute.MainWithBottomNav
+        startDestination = AppRoute.MainWithBottomNav,
     ) {
         composable<AppRoute.MainWithBottomNav>(
             enterTransition = { EnterTransition.None },
-            popEnterTransition = { EnterTransition.None }
+            popEnterTransition = { EnterTransition.None },
         ) {
             with(animatedVisibilityScope) {
                 HomeScreen(
@@ -35,7 +38,7 @@ fun AppNavigation(navController: NavHostController, animatedVisibilityScope: Sha
                     navigateToShipmentHistoryScreen = {
                         navController.navigate(AppRoute.ShipmentHistoryScreen)
                     },
-                    animatedVisibilityScope = this@composable
+                    animatedVisibilityScope = this@composable,
                 )
             }
         }
@@ -44,48 +47,47 @@ fun AppNavigation(navController: NavHostController, animatedVisibilityScope: Sha
             with(animatedVisibilityScope) {
                 SearchScreen(
                     onBackClick = { navController.popBackStack() },
-                    animatedVisibilityScope = this@composable
+                    animatedVisibilityScope = this@composable,
                 )
             }
         }
 
         composable<AppRoute.CalculateScreen>(
             enterTransition = { EnterTransition.None },
-            popEnterTransition = { EnterTransition.None }
+            popEnterTransition = { EnterTransition.None },
         ) {
-                CalculateScreen(
-                    onCalculateClick = {
-                        navController.navigate(AppRoute.ResultsScreen)
-                    },
-                    onBackClick = {
-                        navController.popBackStack()
-                    },
-                )
+            CalculateScreen(
+                onCalculateClick = {
+                    navController.navigate(AppRoute.ResultsScreen)
+                },
+                onBackClick = {
+                    navController.popBackStack()
+                },
+            )
         }
 
         composable<AppRoute.ShipmentHistoryScreen>(
             enterTransition = { EnterTransition.None },
-            popEnterTransition = { EnterTransition.None }
+            popEnterTransition = { EnterTransition.None },
         ) {
             ShipmentHistoryScreen(
                 onBackClick = {
                     navController.popBackStack()
-                }
+                },
             )
         }
 
         composable<AppRoute.ResultsScreen>(
             enterTransition = { EnterTransition.None },
-            popEnterTransition = { EnterTransition.None }
+            popEnterTransition = { EnterTransition.None },
         ) {
             ResultsScreen(
                 onBackToHome = {
-                    navController.navigate(AppRoute.ShipmentHistoryScreen){
+                    navController.navigate(AppRoute.ShipmentHistoryScreen) {
                         popUpTo(AppRoute.MainWithBottomNav)
                         launchSingleTop = true
                     }
-                }
-
+                },
             )
         }
     }

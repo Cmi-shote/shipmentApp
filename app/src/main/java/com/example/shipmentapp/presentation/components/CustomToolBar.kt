@@ -36,7 +36,7 @@ import com.example.shipmentapp.R
 fun CustomToolbar(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit = {},
-    title: String = ""
+    title: String = "",
 ) {
     var startAnimation by remember { mutableStateOf(false) }
 
@@ -48,69 +48,74 @@ fun CustomToolbar(
     // Title animations
     val titleOffsetY by animateDpAsState(
         targetValue = if (startAnimation) 0.dp else 50.dp,
-        animationSpec = tween(
-            durationMillis = 500,
-            easing = FastOutSlowInEasing
-        ),
-        label = "title_offset"
+        animationSpec =
+            tween(
+                durationMillis = 500,
+                easing = FastOutSlowInEasing,
+            ),
+        label = "title_offset",
     )
 
     val titleAlpha by animateFloatAsState(
         targetValue = if (startAnimation) 1f else 0f,
         animationSpec = tween(durationMillis = 500),
-        label = "title_alpha"
+        label = "title_alpha",
     )
 
     // Arrow animations
     val arrowOffsetX by animateDpAsState(
         targetValue = if (startAnimation) 0.dp else (-50).dp,
-        animationSpec = tween(
-            durationMillis = 500,
-            easing = FastOutSlowInEasing
-        ),
-        label = "arrow_offset"
+        animationSpec =
+            tween(
+                durationMillis = 500,
+                easing = FastOutSlowInEasing,
+            ),
+        label = "arrow_offset",
     )
 
     val arrowAlpha by animateFloatAsState(
         targetValue = if (startAnimation) 1f else 0f,
         animationSpec = tween(durationMillis = 500),
-        label = "arrow_alpha"
+        label = "arrow_alpha",
     )
 
     TopAppBar(
         title = {
             Box(
                 modifier = Modifier.fillMaxWidth().offset(x = (-24).dp),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.Center,
             ) {
                 Text(
                     text = title,
                     color = Color.White,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Medium,
-                    modifier = Modifier
-                        .offset(y = titleOffsetY)
-                        .alpha(titleAlpha)
+                    modifier =
+                        Modifier
+                            .offset(y = titleOffsetY)
+                            .alpha(titleAlpha),
                 )
             }
         },
         navigationIcon = {
             IconButton(
                 onClick = onBackClick,
-                modifier = Modifier
-                    .offset(x = arrowOffsetX)
-                    .alpha(arrowAlpha)
+                modifier =
+                    Modifier
+                        .offset(x = arrowOffsetX)
+                        .alpha(arrowAlpha),
             ) {
                 Icon(
                     imageVector = Icons.Default.ArrowBackIosNew,
                     contentDescription = "Back",
-                    tint = Color.White
+                    tint = Color.White,
                 )
             }
         },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = colorResource(id = R.color.app_color_purple)
-        ),
-        modifier = modifier
+        colors =
+            TopAppBarDefaults.topAppBarColors(
+                containerColor = colorResource(id = R.color.app_color_purple),
+            ),
+        modifier = modifier,
     )
 }

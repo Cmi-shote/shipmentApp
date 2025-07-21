@@ -19,23 +19,25 @@ import com.example.shipmentapp.R
 fun CustomButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    text: String = "Calculate"
+    text: String = "Calculate",
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier
-            .fillMaxWidth()
-            .height(56.dp),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = colorResource(id = R.color.app_color_orange)
-        ),
-        shape = RoundedCornerShape(28.dp)
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .height(56.dp),
+        colors =
+            ButtonDefaults.buttonColors(
+                containerColor = colorResource(id = R.color.app_color_orange),
+            ),
+        shape = RoundedCornerShape(28.dp),
     ) {
         Text(
             text = text,
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.Medium,
-            color = Color.White
+            color = Color.White,
         )
     }
 }

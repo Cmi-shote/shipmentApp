@@ -1,10 +1,6 @@
 package com.example.shipmentapp.presentation.calculate
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.AnimatedVisibilityScope
-import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
-import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
@@ -15,7 +11,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -68,7 +63,7 @@ import kotlinx.coroutines.delay
 fun CalculateScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit = {},
-    onCalculateClick: () -> Unit = {}
+    onCalculateClick: () -> Unit = {},
 ) {
     var selectedCategories by remember { mutableStateOf(setOf<String>()) }
     var isCardVisible by remember { mutableStateOf(false) }
@@ -80,7 +75,7 @@ fun CalculateScreen(
     LaunchedEffect(Unit) {
         systemUiController.setStatusBarColor(
             color = statusBarColor,
-            darkIcons = false // set to true if your text/icons are dark
+            darkIcons = false, // set to true if your text/icons are dark
         )
         delay(100)
         isCardVisible = true
@@ -91,34 +86,39 @@ fun CalculateScreen(
             CustomToolbar(
                 title = "Calculate",
                 onBackClick = onBackClick,
-                modifier = Modifier
+                modifier = Modifier,
             )
         },
         content = { paddingValues ->
 
             AnimatedVisibility(
                 visible = isCardVisible,
-                enter = fadeIn(
-                    animationSpec = tween(
-                        durationMillis = 600,
-                        delayMillis = 200 // Fixed delay instead of using undefined index
-                    )
-                ) + slideInVertically(
-                    animationSpec = tween(
-                        durationMillis = 300,
-                        delayMillis = 200
-                    ),
-                    initialOffsetY = { it / 4 } // Slide in from 25% down
-                )
+                enter =
+                    fadeIn(
+                        animationSpec =
+                            tween(
+                                durationMillis = 600,
+                                delayMillis = 200, // Fixed delay instead of using undefined index
+                            ),
+                    ) +
+                        slideInVertically(
+                            animationSpec =
+                                tween(
+                                    durationMillis = 300,
+                                    delayMillis = 200,
+                                ),
+                            initialOffsetY = { it / 4 },
+                            // Slide in from 25% down
+                        ),
             ) {
                 // Content
                 LazyColumn(
-                    modifier = Modifier
-                        .padding(paddingValues)
-                        .padding(horizontal = 16.dp),
-                    verticalArrangement = Arrangement.spacedBy(24.dp)
+                    modifier =
+                        Modifier
+                            .padding(paddingValues)
+                            .padding(horizontal = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(24.dp),
                 ) {
-
                     item {
                         Spacer(modifier = Modifier.height(16.dp))
                         DestinationSection()
@@ -131,7 +131,7 @@ fun CalculateScreen(
                     item {
                         CategoriesSection(
                             selectedCategories = selectedCategories,
-                            onCategoriesChanged = { selectedCategories = it }
+                            onCategoriesChanged = { selectedCategories = it },
                         )
                     }
 
@@ -139,49 +139,49 @@ fun CalculateScreen(
                         CustomButton(
                             onClick = onCalculateClick,
                             modifier = Modifier.padding(vertical = 32.dp),
-                            text = "Calculate"
+                            text = "Calculate",
                         )
                     }
                 }
             }
-        }
+        },
     )
 }
 
 @Composable
 fun DestinationSection() {
     Column(
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         Text(
             text = "Destination",
             fontSize = 20.sp,
             style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.Medium
+            fontWeight = FontWeight.Medium,
         )
 
         Card(
-            colors = CardDefaults.cardColors(containerColor = Color.White)
+            colors = CardDefaults.cardColors(containerColor = Color.White),
         ) {
             Column(
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp),
             ) {
                 DestinationField(
                     icon = Icons.Outlined.Unarchive,
-                    label = "Sender location"
+                    label = "Sender location",
                 )
                 Spacer(modifier = Modifier.height(16.dp))
 
                 DestinationField(
                     icon = Icons.Outlined.Archive,
-                    label = "Receiver location"
+                    label = "Receiver location",
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 DestinationField(
                     icon = Icons.Filled.Scale,
-                    label = "Approx weight"
+                    label = "Approx weight",
                 )
             }
         }
@@ -191,16 +191,15 @@ fun DestinationSection() {
 @Composable
 fun DestinationField(
     icon: ImageVector,
-    label: String
+    label: String,
 ) {
     var textValue by remember { mutableStateOf("") }
 
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(containerColor = Color.White),
     ) {
-
         CustomOutlineField(
             value = textValue,
             onValueChange = { newValue ->
@@ -214,16 +213,16 @@ fun DestinationField(
                         imageVector = icon,
                         contentDescription = null,
                         tint = Color(0xFF8A8A8A),
-                        modifier = Modifier.size(24.dp)
+                        modifier = Modifier.size(24.dp),
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     VerticalDivider(
                         color = Color.Gray.copy(alpha = 0.2f),
-                        modifier = Modifier.height(24.dp)
+                        modifier = Modifier.height(24.dp),
                     )
                 }
             },
-            placeholder = { Text(label) }
+            placeholder = { Text(label) },
         )
     }
 }
@@ -231,7 +230,7 @@ fun DestinationField(
 @Composable
 fun PackagingSection() {
     Column(
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         Text(
             text = "Packaging",
@@ -243,7 +242,7 @@ fun PackagingSection() {
         Text(
             text = "What are you sending?",
             style = MaterialTheme.typography.bodyLarge,
-            color = Color(0xFF8A8A8A)
+            color = Color(0xFF8A8A8A),
         )
 
         Spacer(modifier = Modifier.height(4.dp))
@@ -265,11 +264,11 @@ fun PackagingDropdown() {
                 Image(
                     painter = painterResource(R.drawable.box1),
                     contentDescription = "Package",
-                    modifier = Modifier.size(45.dp)
+                    modifier = Modifier.size(45.dp),
                 )
                 VerticalDivider(
                     color = Color.Gray.copy(alpha = 0.2f),
-                    modifier = Modifier.height(45.dp)
+                    modifier = Modifier.height(45.dp),
                 )
                 Spacer(modifier = Modifier.width(8.dp))
             }
@@ -279,42 +278,49 @@ fun PackagingDropdown() {
                 imageVector = Icons.Default.KeyboardArrowDown,
                 contentDescription = null,
                 tint = Color(0xFF8A8A8A),
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(24.dp),
             )
         },
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = Color.Transparent,
-            unfocusedBorderColor = Color.Transparent,
-            focusedContainerColor = Color.White,
-            unfocusedContainerColor = Color.White
-        )
+        colors =
+            OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color.Transparent,
+                unfocusedBorderColor = Color.Transparent,
+                focusedContainerColor = Color.White,
+                unfocusedContainerColor = Color.White,
+            ),
     )
 }
 
 @Composable
 fun CategoriesSection(
     selectedCategories: Set<String>,
-    onCategoriesChanged: (Set<String>) -> Unit
+    onCategoriesChanged: (Set<String>) -> Unit,
 ) {
-    val categories = listOf(
-        "Documents", "Glass", "Liquid", "Food",
-        "Electronic", "Product", "Others"
-    )
+    val categories =
+        listOf(
+            "Documents",
+            "Glass",
+            "Liquid",
+            "Food",
+            "Electronic",
+            "Product",
+            "Others",
+        )
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         Text(
             text = "Categories",
             fontSize = 20.sp,
             style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.Medium
+            fontWeight = FontWeight.Medium,
         )
 
         Text(
             text = "What are you sending?",
             fontSize = 16.sp,
-            color = Color(0xFF8A8A8A)
+            color = Color(0xFF8A8A8A),
         )
     }
 
@@ -323,20 +329,21 @@ fun CategoriesSection(
     FlowRow(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
-        maxItemsInEachRow = 4
+        maxItemsInEachRow = 4,
     ) {
         categories.forEach { category ->
             CategoryChip(
                 text = category,
                 isSelected = category in selectedCategories,
                 onClick = {
-                    val newSelection = if (category in selectedCategories) {
-                        selectedCategories - category
-                    } else {
-                        selectedCategories + category
-                    }
+                    val newSelection =
+                        if (category in selectedCategories) {
+                            selectedCategories - category
+                        } else {
+                            selectedCategories + category
+                        }
                     onCategoriesChanged(newSelection)
-                }
+                },
             )
         }
     }
@@ -346,40 +353,41 @@ fun CategoriesSection(
 fun CategoryChip(
     text: String,
     isSelected: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Box(
-        modifier = Modifier
-            .border(
-                width = 1.dp,
-                color = if (isSelected) Color(0xFF142333) else Color.Gray,
-                shape = RoundedCornerShape(8.dp)
-            )
-            .background(
-                color = if (isSelected) Color(0xFF142333) else Color.Transparent,
-                shape = RoundedCornerShape(8.dp)
-            )
-            .clickable { onClick() }
-            .padding(horizontal = 12.dp, vertical = 12.dp),
-        contentAlignment = Alignment.Center
+        modifier =
+            Modifier
+                .border(
+                    width = 1.dp,
+                    color = if (isSelected) Color(0xFF142333) else Color.Gray,
+                    shape = RoundedCornerShape(8.dp),
+                )
+                .background(
+                    color = if (isSelected) Color(0xFF142333) else Color.Transparent,
+                    shape = RoundedCornerShape(8.dp),
+                )
+                .clickable { onClick() }
+                .padding(horizontal = 12.dp, vertical = 12.dp),
+        contentAlignment = Alignment.Center,
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
         ) {
             if (isSelected) {
                 Icon(
                     imageVector = Icons.Default.Check,
                     contentDescription = null,
                     tint = Color.White,
-                    modifier = Modifier.size(16.dp)
+                    modifier = Modifier.size(16.dp),
                 )
             }
             Text(
                 text = text,
                 fontSize = 14.sp,
                 color = if (isSelected) Color.White else Color.Black,
-                fontWeight = if (isSelected) FontWeight.Medium else FontWeight.Normal
+                fontWeight = if (isSelected) FontWeight.Medium else FontWeight.Normal,
             )
         }
     }

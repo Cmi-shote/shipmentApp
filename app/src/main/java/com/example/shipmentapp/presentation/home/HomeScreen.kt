@@ -58,7 +58,7 @@ fun SharedTransitionScope.HomeScreen(
     shipment: Shipment = sampleShipments[1],
     onSearchBarClick: () -> Unit = {},
     navigateToCalculateScreen: () -> Unit = {},
-    navigateToShipmentHistoryScreen: () -> Unit = {}
+    navigateToShipmentHistoryScreen: () -> Unit = {},
 ) {
     var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
 
@@ -72,7 +72,7 @@ fun SharedTransitionScope.HomeScreen(
     LaunchedEffect(Unit) {
         systemUiController.setStatusBarColor(
             color = statusBarColor,
-            darkIcons = false // set to true if your text/icons are dark
+            darkIcons = false, // set to true if your text/icons are dark
         )
         isTopSectionVisible = true
         delay(200) // Delay between top section and content
@@ -86,31 +86,35 @@ fun SharedTransitionScope.HomeScreen(
             // Animated TopBar - slides down and fades in
             AnimatedVisibility(
                 visible = isTopSectionVisible,
-                enter = fadeIn(
-                    animationSpec = tween(durationMillis = 600)
-                ) + slideInVertically(
-                    animationSpec = tween(durationMillis = 600),
-                    initialOffsetY = { -it } // Slide from above (negative offset)
-                )
+                enter =
+                    fadeIn(
+                        animationSpec = tween(durationMillis = 600),
+                    ) +
+                        slideInVertically(
+                            animationSpec = tween(durationMillis = 600),
+                            initialOffsetY = { -it }, // Slide from above (negative offset)
+                        ),
             ) {
                 Column {
                     HomePageToolbar()
                     Box(
-                        modifier = Modifier
-                            .background(color = colorResource(id = R.color.app_color_purple))
+                        modifier =
+                            Modifier
+                                .background(color = colorResource(id = R.color.app_color_purple)),
                     ) {
                         SearchBar(
                             onSearchBarClick = onSearchBarClick,
                             readOnly = true,
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .sharedElement(
-                                    sharedContentState = rememberSharedContentState(key = "searchK"),
-                                    animatedVisibilityScope = animatedVisibilityScope,
-                                    boundsTransform = { _, _ ->
-                                        tween(durationMillis = 1000)
-                                    }
-                                )
+                            modifier =
+                                Modifier
+                                    .padding(16.dp)
+                                    .sharedElement(
+                                        sharedContentState = rememberSharedContentState(key = "searchK"),
+                                        animatedVisibilityScope = animatedVisibilityScope,
+                                        boundsTransform = { _, _ ->
+                                            tween(durationMillis = 1000)
+                                        },
+                                    ),
                         )
                     }
                 }
@@ -118,21 +122,23 @@ fun SharedTransitionScope.HomeScreen(
         },
         content = { paddingValues ->
             Column(modifier = Modifier.padding(paddingValues)) {
-
                 // Animated Content Section - slides up and fades in
                 AnimatedVisibility(
                     visible = isContentVisible,
-                    enter = fadeIn(
-                        animationSpec = tween(durationMillis = 700)
-                    ) + slideInVertically(
-                        animationSpec = tween(durationMillis = 700),
-                        initialOffsetY = { it / 2 } // Slide from below (positive offset)
-                    )
+                    enter =
+                        fadeIn(
+                            animationSpec = tween(durationMillis = 700),
+                        ) +
+                            slideInVertically(
+                                animationSpec = tween(durationMillis = 700),
+                                initialOffsetY = { it / 2 }, // Slide from below (positive offset)
+                            ),
                 ) {
                     Column(
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .verticalScroll(rememberScrollState())
+                        modifier =
+                            Modifier
+                                .padding(16.dp)
+                                .verticalScroll(rememberScrollState()),
                     ) {
                         Text(
                             text = "Tracking",
@@ -174,16 +180,16 @@ fun SharedTransitionScope.HomeScreen(
                         2 -> navigateToShipmentHistoryScreen()
                         3 -> { /* not shown in video */ }
                     }
-                }
+                },
             )
-        }
+        },
     )
 }
 
 @Composable
 fun AvailableVehiclesCard(vehicles: List<Vehicles> = vehiclesList) {
     LazyRow(
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         itemsIndexed(vehicles) { index, vehicle ->
             var isVisible by remember { mutableStateOf(false) }
@@ -196,36 +202,41 @@ fun AvailableVehiclesCard(vehicles: List<Vehicles> = vehiclesList) {
 
             AnimatedVisibility(
                 visible = isVisible,
-                enter = slideInHorizontally(
-                    initialOffsetX = { fullWidth -> fullWidth }, // Start from right
-                    animationSpec = tween(
-                        durationMillis = 500,
-                        easing = FastOutSlowInEasing
-                    )
-                ) + fadeIn(
-                    animationSpec = tween(
-                        durationMillis = 500,
-                        easing = FastOutSlowInEasing
-                    )
-                )
+                enter =
+                    slideInHorizontally(
+                        initialOffsetX = { fullWidth -> fullWidth }, // Start from right
+                        animationSpec =
+                            tween(
+                                durationMillis = 500,
+                                easing = FastOutSlowInEasing,
+                            ),
+                    ) +
+                        fadeIn(
+                            animationSpec =
+                                tween(
+                                    durationMillis = 500,
+                                    easing = FastOutSlowInEasing,
+                                ),
+                        ),
             ) {
                 VehiclesCard(
                     title = vehicle.vehicleType,
                     subtitle = vehicle.desc,
                     image = vehicle.image,
-                    modifier = Modifier
-                        .height(200.dp)
-                        .width(170.dp)
+                    modifier =
+                        Modifier
+                            .height(200.dp)
+                            .width(170.dp),
                 )
             }
         }
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun HomePreview() {
+// @Preview(showBackground = true)
+// @Composable
+// fun HomePreview() {
 //    ShipmentAppTheme {
 //        HomeScreen()
 //    }
-//}
+// }

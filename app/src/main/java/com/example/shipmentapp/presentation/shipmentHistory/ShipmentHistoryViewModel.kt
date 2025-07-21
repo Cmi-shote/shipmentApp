@@ -17,11 +17,10 @@ import kotlinx.coroutines.launch
 data class ShipmentHistoryUiState(
     val shipments: List<Shipment> = sampleShipments, // All shipments, or initial set
     val filteredShipments: List<Shipment> = sampleShipments, // Filtered based on tab
-    val selectedTabIndex: Int = 0
+    val selectedTabIndex: Int = 0,
 )
 
 class ShipmentHistoryViewModel : ViewModel() {
-
     private val _uiState = MutableStateFlow(ShipmentHistoryUiState())
     val uiState: StateFlow<ShipmentHistoryUiState> = _uiState.asStateFlow()
 
@@ -41,10 +40,18 @@ class ShipmentHistoryViewModel : ViewModel() {
 
     private fun filterShipmentsByTab(tabIndex: Int) {
         val selectedTab = tabs[tabIndex]
-        val filteredList = when (selectedTab.status) {
-            null -> _uiState.value.shipments // "All" tab or similar
-            else -> if(selectedTab.status == ShipmentStatus.ALL) uiState.value.shipments else uiState.value.shipments.filter { it.status == selectedTab.status }
-        }
+        val filteredList =
+            when (selectedTab.status) {
+                null -> _uiState.value.shipments // "All" tab or similar
+                else ->
+                    if (selectedTab.status == ShipmentStatus.ALL) {
+                        uiState.value.shipments
+                    } else {
+                        uiState.value.shipments.filter {
+                            it.status == selectedTab.status
+                        }
+                    }
+            }
         _uiState.update { currentState ->
             currentState.copy(filteredShipments = emptyList())
         }

@@ -18,14 +18,14 @@ fun CustomOutlineField(
     trailingIcon: @Composable (() -> Unit)? = null,
     placeholder: @Composable (() -> Unit)? = null,
     readOnly: Boolean = false,
-    colors: TextFieldColors = OutlinedTextFieldDefaults.colors(
-        focusedBorderColor = Color.Transparent,
-        unfocusedBorderColor = Color.Transparent,
-        focusedContainerColor = Color(0xFFFAFAFA),
-        unfocusedContainerColor= Color(0xFFFAFAFA)
-    )
+    colors: TextFieldColors =
+        OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = Color.Transparent,
+            unfocusedBorderColor = Color.Transparent,
+            focusedContainerColor = Color(0xFFFAFAFA),
+            unfocusedContainerColor = Color(0xFFFAFAFA),
+        ),
 ) {
-
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
@@ -36,6 +36,6 @@ fun CustomOutlineField(
         trailingIcon = trailingIcon,
         placeholder = placeholder,
         colors = colors,
-        readOnly = readOnly
+        readOnly = readOnly,
     )
 }

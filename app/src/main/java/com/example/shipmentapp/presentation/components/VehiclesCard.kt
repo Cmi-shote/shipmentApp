@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,36 +30,37 @@ fun VehiclesCard(
     title: String,
     subtitle: String,
     image: Int,
-    backgroundColor: Color = Color.White
+    backgroundColor: Color = Color.White,
 ) {
     Box(
-        modifier = modifier.size(200.dp)
-            .background(
-                color = backgroundColor,
-                shape = RoundedCornerShape(16.dp)
-            )
+        modifier =
+            modifier.size(200.dp)
+                .background(
+                    color = backgroundColor,
+                    shape = RoundedCornerShape(16.dp),
+                ),
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(start = 16.dp, top = 16.dp)
+            modifier = Modifier.padding(start = 16.dp, top = 16.dp),
         ) {
             // Title and Subtitle
             Column(
                 verticalArrangement = Arrangement.spacedBy(4.dp),
-                horizontalAlignment = Alignment.Start
+                horizontalAlignment = Alignment.Start,
             ) {
                 Text(
                     text = title,
                     fontSize = 20.sp,
                     style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.align(Alignment.Start)
-                    )
+                    modifier = Modifier.align(Alignment.Start),
+                )
                 Text(
                     text = subtitle,
                     style = MaterialTheme.typography.bodySmall,
                     fontWeight = FontWeight.Normal,
                     color = Color.Gray,
-                    modifier = Modifier.align(Alignment.Start)
+                    modifier = Modifier.align(Alignment.Start),
                 )
             }
 
@@ -68,7 +68,7 @@ fun VehiclesCard(
                 painter = painterResource(id = image),
                 contentDescription = null,
                 modifier = Modifier.weight(1f).fillMaxWidth(),
-                contentScale = ContentScale.FillBounds
+                contentScale = ContentScale.FillBounds,
             )
         }
     }
@@ -79,12 +79,12 @@ fun VehiclesCard(
 @Composable
 fun VehicleCardPreview() {
     ShipmentAppTheme {
-        VehiclesCard (
+        VehiclesCard(
             modifier = Modifier.padding(16.dp),
             title = "Ocean freight",
             subtitle = "International",
             image = R.drawable.boat,
-            backgroundColor = Color.White
+            backgroundColor = Color.White,
         )
     }
 }

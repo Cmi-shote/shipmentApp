@@ -22,8 +22,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,39 +41,40 @@ fun SearchBar(
     onActionClick: () -> Unit = {},
     onSearchBarClick: () -> Unit = {},
     onBackClick: () -> Unit = {},
-    readOnly: Boolean = false
+    readOnly: Boolean = false,
 ) {
-
     Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
         if (showBackIcon) {
             Icon(
                 imageVector = Icons.Default.ArrowBackIosNew,
                 contentDescription = "Back",
                 tint = Color.White,
-                modifier = Modifier.size(24.dp).clickable {
-                    onBackClick()
-                }
+                modifier =
+                    Modifier.size(24.dp).clickable {
+                        onBackClick()
+                    },
             )
             Spacer(modifier = Modifier.width(12.dp))
         }
 
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp)
-                .background(Color.White, RoundedCornerShape(28.dp))
-                .padding(horizontal = 16.dp)
-                .clickable {
-                    onSearchBarClick()
-                },
-            verticalAlignment = Alignment.CenterVertically
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
+                    .background(Color.White, RoundedCornerShape(28.dp))
+                    .padding(horizontal = 16.dp)
+                    .clickable {
+                        onSearchBarClick()
+                    },
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             // Search Icon
             Icon(
                 imageVector = Icons.Default.Search,
                 contentDescription = "Search",
                 tint = Color(0xFF8A8A8A),
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(24.dp),
             )
 
             Spacer(modifier = Modifier.width(12.dp))
@@ -83,7 +82,7 @@ fun SearchBar(
             // Search TextField
             Box(
                 modifier = Modifier.weight(1f),
-                contentAlignment = Alignment.CenterStart
+                contentAlignment = Alignment.CenterStart,
             ) {
                 CustomOutlineField(
                     value = searchQuery,
@@ -99,20 +98,21 @@ fun SearchBar(
 
             // Action Button
             Box(
-                modifier = Modifier
-                    .size(40.dp)
-                    .background(Color(0xFFFF9800), CircleShape),
-                contentAlignment = Alignment.Center
+                modifier =
+                    Modifier
+                        .size(40.dp)
+                        .background(Color(0xFFFF9800), CircleShape),
+                contentAlignment = Alignment.Center,
             ) {
                 IconButton(
                     onClick = onActionClick,
-                    modifier = Modifier.size(40.dp)
+                    modifier = Modifier.size(40.dp),
                 ) {
                     Icon(
                         imageVector = Icons.Default.Flip,
                         contentDescription = "Action",
                         tint = Color.White,
-                        modifier = Modifier.size(20.dp).rotate(90f)
+                        modifier = Modifier.size(20.dp).rotate(90f),
                     )
                 }
             }

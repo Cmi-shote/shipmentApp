@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ktlint)
 }
 
 android {
@@ -24,7 +25,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -61,5 +62,4 @@ dependencies {
     implementation(libs.material.icons.extended)
     implementation(libs.androidx.compose.animation)
     implementation(libs.android.systemuicontroller)
-
 }

@@ -50,7 +50,7 @@ import kotlinx.coroutines.delay
 fun ResultsScreen(
     estimatedAmount: String = "$1452",
     currency: String = "USD",
-    onBackToHome: () -> Unit = {}
+    onBackToHome: () -> Unit = {},
 ) {
     var isVisible by remember { mutableStateOf(false) }
     var isButtonVisible by remember { mutableStateOf(false) }
@@ -62,7 +62,7 @@ fun ResultsScreen(
     LaunchedEffect(Unit) {
         systemUiController.setStatusBarColor(
             color = statusBarColor,
-            darkIcons = false // set to true if your text/icons are dark
+            darkIcons = false, // set to true if your text/icons are dark
         )
 
         isTitleVisible = true
@@ -72,29 +72,34 @@ fun ResultsScreen(
         isButtonVisible = true
     }
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFFAFAFA))
-            .padding(24.dp),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(Color(0xFFFAFAFA))
+                .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         Spacer(modifier = Modifier.height(40.dp))
 
         AnimatedVisibility(
             visible = isTitleVisible,
-            enter = fadeIn(
-                animationSpec = tween(
-                    durationMillis = 500,
-                    easing = FastOutSlowInEasing
-                )
-            ) + slideInVertically(
-                animationSpec = tween(
-                    durationMillis = 500,
-                    easing = FastOutSlowInEasing
-                ),
-                initialOffsetY = { it / 2 }
-            )
+            enter =
+                fadeIn(
+                    animationSpec =
+                        tween(
+                            durationMillis = 500,
+                            easing = FastOutSlowInEasing,
+                        ),
+                ) +
+                    slideInVertically(
+                        animationSpec =
+                            tween(
+                                durationMillis = 500,
+                                easing = FastOutSlowInEasing,
+                            ),
+                        initialOffsetY = { it / 2 },
+                    ),
         ) {
             // MoveMate Logo and Title
             MoveMateHeader()
@@ -104,18 +109,22 @@ fun ResultsScreen(
 
         AnimatedVisibility(
             visible = isVisible,
-            enter = scaleIn(
-                animationSpec = tween(
-                    durationMillis = 800,
-                    easing = FastOutSlowInEasing
-                ),
-                initialScale = 0.8f
-            ) + fadeIn(
-                animationSpec = tween(
-                    durationMillis = 800,
-                    easing = FastOutSlowInEasing
-                )
-            )
+            enter =
+                scaleIn(
+                    animationSpec =
+                        tween(
+                            durationMillis = 800,
+                            easing = FastOutSlowInEasing,
+                        ),
+                    initialScale = 0.8f,
+                ) +
+                    fadeIn(
+                        animationSpec =
+                            tween(
+                                durationMillis = 800,
+                                easing = FastOutSlowInEasing,
+                            ),
+                    ),
         ) {
             PackageIllustration()
         }
@@ -129,21 +138,25 @@ fun ResultsScreen(
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        Column (modifier = Modifier.height(100.dp)) {
+        Column(modifier = Modifier.height(100.dp)) {
             AnimatedVisibility(
                 visible = isButtonVisible,
-                enter = fadeIn(
-                    animationSpec = tween(
-                        durationMillis = 500,
-                        easing = FastOutSlowInEasing
-                    )
-                ) + slideInVertically(
-                    animationSpec = tween(
-                        durationMillis = 500,
-                        easing = FastOutSlowInEasing
-                    ),
-                    initialOffsetY = { it / 2 }
-                )
+                enter =
+                    fadeIn(
+                        animationSpec =
+                            tween(
+                                durationMillis = 500,
+                                easing = FastOutSlowInEasing,
+                            ),
+                    ) +
+                        slideInVertically(
+                            animationSpec =
+                                tween(
+                                    durationMillis = 500,
+                                    easing = FastOutSlowInEasing,
+                                ),
+                            initialOffsetY = { it / 2 },
+                        ),
             ) {
                 CustomButton(onClick = onBackToHome, text = "Back to Home")
             }
@@ -151,28 +164,27 @@ fun ResultsScreen(
 
         Spacer(modifier = Modifier.height(32.dp))
     }
-
 }
 
 @Composable
 private fun MoveMateHeader() {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
+        horizontalArrangement = Arrangement.Center,
     ) {
         Text(
             text = "MoveMate",
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             fontStyle = FontStyle.Italic,
-            color = colorResource(R.color.app_color_purple)
+            color = colorResource(R.color.app_color_purple),
         )
         Spacer(modifier = Modifier.width(8.dp))
         Icon(
             imageVector = ImageVector.vectorResource(R.drawable.delivery_truck),
             contentDescription = "MoveMate Logo",
             tint = colorResource(R.color.app_color_orange),
-            modifier = Modifier.size(40.dp)
+            modifier = Modifier.size(40.dp),
         )
     }
 }
@@ -182,7 +194,7 @@ private fun PackageIllustration() {
     // 3D-style package box using CSS-like styling with Compose
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier
+        modifier = Modifier,
     ) {
         // Main box body
         Image(
@@ -197,12 +209,13 @@ private fun PackageIllustration() {
 private fun EstimationContent(
     estimatedAmount: String,
     currency: String,
-    isVisible: Boolean = true
+    isVisible: Boolean = true,
 ) {
     // Extract numeric value from estimatedAmount (remove $ and convert to Int)
-    val targetAmount = remember {
-        estimatedAmount.replace("$", "").replace(",", "").toIntOrNull() ?: 1452
-    }
+    val targetAmount =
+        remember {
+            estimatedAmount.replace("$", "").replace(",", "").toIntOrNull() ?: 1452
+        }
 
     val startAmount = 1091
     var currentAmount by remember { mutableIntStateOf(startAmount) }
@@ -230,18 +243,22 @@ private fun EstimationContent(
 
     AnimatedVisibility(
         visible = isVisible,
-        enter = fadeIn(
-            animationSpec = tween(
-                durationMillis = 600,
-                delayMillis = 100 // Small delay after package animation
-            )
-        ) + slideInVertically(
-            animationSpec = tween(
-                durationMillis = 600,
-                delayMillis = 100
-            ),
-            initialOffsetY = { it / 4 } // Slide in from 25% down
-        )
+        enter =
+            fadeIn(
+                animationSpec =
+                    tween(
+                        durationMillis = 600,
+                        delayMillis = 100, // Small delay after package animation
+                    ),
+            ) +
+                slideInVertically(
+                    animationSpec =
+                        tween(
+                            durationMillis = 600,
+                            delayMillis = 100,
+                        ),
+                    initialOffsetY = { it / 4 }, // Slide in from 25% down
+                ),
     ) {
         // Trigger counter animation when this content becomes visible
         LaunchedEffect(Unit) {
@@ -250,25 +267,25 @@ private fun EstimationContent(
         }
 
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 text = "Total Estimated Amount",
                 style = MaterialTheme.typography.titleLarge,
                 color = Color(0xFF374151),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 // Animated counter display
                 Text(
                     text = "$$currentAmount",
                     style = MaterialTheme.typography.titleLarge,
-                    color = Color(0xFF49C38D) // Green color
+                    color = Color(0xFF49C38D), // Green color
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
@@ -276,9 +293,10 @@ private fun EstimationContent(
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Medium,
                     color = Color(0xFF49C38D),
-                    modifier = Modifier
-                        .align(Alignment.Bottom)
-                        .padding(bottom = 2.dp)
+                    modifier =
+                        Modifier
+                            .align(Alignment.Bottom)
+                            .padding(bottom = 2.dp),
                 )
             }
 
@@ -289,7 +307,7 @@ private fun EstimationContent(
                 style = MaterialTheme.typography.bodyMedium,
                 color = Color.Gray,
                 textAlign = TextAlign.Center,
-                lineHeight = 20.sp
+                lineHeight = 20.sp,
             )
         }
     }
