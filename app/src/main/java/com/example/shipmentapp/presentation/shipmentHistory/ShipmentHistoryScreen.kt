@@ -68,6 +68,7 @@ import com.example.shipmentapp.models.sampleShipments
 import com.example.shipmentapp.models.tabs
 import com.example.shipmentapp.presentation.components.CustomToolbar
 import com.example.shipmentapp.ui.theme.ShipmentAppTheme
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.delay
 
 @Composable
@@ -80,15 +81,15 @@ fun ShipmentHistoryScreen(
     var isTabRowVisible by remember { mutableStateOf(false) }
     var isToolbarVisible by remember { mutableStateOf(false) }
 
-//    val systemUiController = rememberSystemUiController()
-//    val statusBarColor = colorResource(id = R.color.app_color_purple)
+    val systemUiController = rememberSystemUiController()
+    val statusBarColor = colorResource(id = R.color.app_color_purple)
 
     // Set the status bar color when the screen is launched
     LaunchedEffect(Unit) {
-//        systemUiController.setStatusBarColor(
-//            color = statusBarColor,
-//            darkIcons = false // set to true if your text/icons are dark
-//        )
+        systemUiController.setStatusBarColor(
+            color = statusBarColor,
+            darkIcons = false // set to true if your text/icons are dark
+        )
         delay(100)
         isToolbarVisible = true
         delay(100) // Small delay before tab row

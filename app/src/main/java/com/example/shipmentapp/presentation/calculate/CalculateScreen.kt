@@ -64,10 +64,8 @@ import com.example.shipmentapp.presentation.components.CustomToolbar
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.delay
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun CalculateScreen(
-//    animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit = {},
     onCalculateClick: () -> Unit = {}
@@ -75,15 +73,15 @@ fun CalculateScreen(
     var selectedCategories by remember { mutableStateOf(setOf<String>()) }
     var isCardVisible by remember { mutableStateOf(false) }
 
-//    val systemUiController = rememberSystemUiController()
-//    val statusBarColor = colorResource(id = R.color.app_color_purple)
+    val systemUiController = rememberSystemUiController()
+    val statusBarColor = colorResource(id = R.color.app_color_purple)
 
     // Set the status bar color when the screen is launched
     LaunchedEffect(Unit) {
-//        systemUiController.setStatusBarColor(
-//            color = statusBarColor,
-//            darkIcons = false // set to true if your text/icons are dark
-//        )
+        systemUiController.setStatusBarColor(
+            color = statusBarColor,
+            darkIcons = false // set to true if your text/icons are dark
+        )
         delay(100)
         isCardVisible = true
     }
@@ -94,13 +92,6 @@ fun CalculateScreen(
                 title = "Calculate",
                 onBackClick = onBackClick,
                 modifier = Modifier
-//                    .sharedElement(
-//                    sharedContentState = rememberSharedContentState(key = "toolbar"),
-//                    animatedVisibilityScope = animatedVisibilityScope,
-//                    boundsTransform = { _, _ ->
-//                        tween(durationMillis = 1000)
-//                    }
-//                )
             )
         },
         content = { paddingValues ->

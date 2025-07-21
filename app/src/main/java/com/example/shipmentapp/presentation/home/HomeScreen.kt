@@ -47,6 +47,7 @@ import com.example.shipmentapp.presentation.components.BottomNavigationBar
 import com.example.shipmentapp.presentation.components.SearchBar
 import com.example.shipmentapp.presentation.components.ShipmentCard
 import com.example.shipmentapp.presentation.components.VehiclesCard
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalSharedTransitionApi::class)
@@ -64,15 +65,15 @@ fun SharedTransitionScope.HomeScreen(
     // Animation states
     var isTopSectionVisible by remember { mutableStateOf(false) }
     var isContentVisible by remember { mutableStateOf(false) }
-//    val systemUiController = rememberSystemUiController()
-//    val statusBarColor = colorResource(id = R.color.app_color_purple)
+    val systemUiController = rememberSystemUiController()
+    val statusBarColor = colorResource(id = R.color.app_color_purple)
 
     // Set the status bar color when the screen is launched
     LaunchedEffect(Unit) {
-//        systemUiController.setStatusBarColor(
-//            color = statusBarColor,
-//            darkIcons = false // set to true if your text/icons are dark
-//        )
+        systemUiController.setStatusBarColor(
+            color = statusBarColor,
+            darkIcons = false // set to true if your text/icons are dark
+        )
         isTopSectionVisible = true
         delay(200) // Delay between top section and content
         isContentVisible = true

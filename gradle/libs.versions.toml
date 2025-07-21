@@ -11,6 +11,7 @@ composeBom = "2024.09.00"
 materialExtended = "1.5.1"
 navigationCompose = "2.9.0"
 composeAnim = "1.8.3"
+accompanistVersion = "0.32.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -30,6 +31,7 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialExtended" }
 androidx-compose-animation = { group = "androidx.compose.animation", name = "animation", version.ref = "composeAnim" }
+android-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanistVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

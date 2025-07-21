@@ -60,4 +60,6 @@ dependencies {
     implementation(libs.navigation.compose)
     implementation(libs.material.icons.extended)
     implementation(libs.androidx.compose.animation)
+    implementation(libs.android.systemuicontroller)
+
 }

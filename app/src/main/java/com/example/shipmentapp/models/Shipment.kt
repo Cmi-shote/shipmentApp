@@ -198,7 +198,7 @@ val sampleShipments = listOf(
 
 val vehiclesList = listOf(
     Vehicles("Ocean freight", "International", R.drawable.boat),
-    Vehicles("Road freight", "International", R.drawable.truck),
+    Vehicles("Cargo freight", "Reliable", R.drawable.truck),
     Vehicles("Road freight", "Local", R.drawable.truck)
 )
 

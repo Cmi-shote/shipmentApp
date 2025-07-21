@@ -54,16 +54,18 @@ fun ResultsScreen(
 ) {
     var isVisible by remember { mutableStateOf(false) }
     var isButtonVisible by remember { mutableStateOf(false) }
-//    val systemUiController = rememberSystemUiController()
-//    val statusBarColor = Color.White
+    var isTitleVisible by remember { mutableStateOf(false) }
+    val systemUiController = rememberSystemUiController()
+    val statusBarColor = Color.White
 
     // Set the status bar color when the screen is launched
     LaunchedEffect(Unit) {
-//        systemUiController.setStatusBarColor(
-//            color = statusBarColor,
-//            darkIcons = false // set to true if your text/icons are dark
-//        )
+        systemUiController.setStatusBarColor(
+            color = statusBarColor,
+            darkIcons = false // set to true if your text/icons are dark
+        )
 
+        isTitleVisible = true
         delay(100) // Small delay before animation starts
         isVisible = true
         delay(400)
@@ -79,8 +81,24 @@ fun ResultsScreen(
     ) {
         Spacer(modifier = Modifier.height(40.dp))
 
-        // MoveMate Logo and Title
-        MoveMateHeader()
+        AnimatedVisibility(
+            visible = isTitleVisible,
+            enter = fadeIn(
+                animationSpec = tween(
+                    durationMillis = 500,
+                    easing = FastOutSlowInEasing
+                )
+            ) + slideInVertically(
+                animationSpec = tween(
+                    durationMillis = 500,
+                    easing = FastOutSlowInEasing
+                ),
+                initialOffsetY = { it / 2 }
+            )
+        ) {
+            // MoveMate Logo and Title
+            MoveMateHeader()
+        }
 
         Spacer(modifier = Modifier.height(24.dp))
 
