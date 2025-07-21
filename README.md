@@ -8,6 +8,9 @@ The user interface of ShipmentApp is inspired by the beautiful design showcased 
 ## Design Approach
 Where the Dribbble reference provided clear visual guidance, the app closely follows its style and layout. For features, screens, or UI elements not explicitly depicted in the Dribbble design, custom design solutions were thoughtfully created to ensure a cohesive and user-friendly experience throughout the app.
 
+## Icons
+Some icons used in the app could not be sourced directly. In such cases, the icons were carefully cropped from the Dribbble images to maintain visual consistency with the reference design.
+
 ## Features
 - Shipment tracking and status overview
 - Search bar for receipt numbers
@@ -23,5 +26,6 @@ Where the Dribbble reference provided clear visual guidance, the app closely fol
 ## Credits
 - UI reference: [Movemate Shipments Mobile App on Dribbble](https://dribbble.com/shots/21617837-Movemate-Shipments-Mobile-App)
 - Custom UI/UX for additional features and screens
+- Some icons cropped from Dribbble images due to unavailability of direct sources
 
 ---
