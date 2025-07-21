@@ -79,9 +79,11 @@ fun ShipmentHistoryScreen(
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     var isCardVisible by remember { mutableStateOf(false) }
     var isTabRowVisible by remember { mutableStateOf(false) }
+    var isToolbarVisible by remember { mutableStateOf(false) }
 
-    // Add this LaunchedEffect to trigger the animation
     LaunchedEffect(Unit) {
+        isToolbarVisible = true
+        delay(100) // Small delay before tab row
         isTabRowVisible = true
         delay(200) // Small delay before cards start animating
         isCardVisible = true
@@ -90,10 +92,25 @@ fun ShipmentHistoryScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            CustomToolbar(
-                title = "Shipment History",
-                onBackClick = onBackClick
-            )
+//            AnimatedVisibility(
+//                visible = isToolbarVisible,
+//                enter = slideInVertically(
+//                    animationSpec = tween(
+//                        durationMillis = 500,
+//                        easing = FastOutSlowInEasing
+//                    ),
+//                    initialOffsetY = { it / 4 } // Start 25% down
+//                ) + fadeIn(
+//                    animationSpec = tween(
+//                        durationMillis = 500
+//                    )
+//                )
+//            ) {
+                CustomToolbar(
+                    title = "Shipment History",
+                    onBackClick = onBackClick
+                )
+//            }
         },
         content = { paddingValues ->
             LazyColumn(

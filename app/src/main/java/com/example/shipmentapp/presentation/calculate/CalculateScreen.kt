@@ -1,5 +1,13 @@
 package com.example.shipmentapp.presentation.calculate
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -30,9 +38,11 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,6 +51,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,56 +61,93 @@ import com.example.shipmentapp.R
 import com.example.shipmentapp.presentation.components.CustomButton
 import com.example.shipmentapp.presentation.components.CustomOutlineField
 import com.example.shipmentapp.presentation.components.CustomToolbar
+import kotlinx.coroutines.delay
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun CalculateScreen(
+fun SharedTransitionScope.CalculateScreen(
+    animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit = {},
     onCalculateClick: () -> Unit = {}
 ) {
     var selectedCategories by remember { mutableStateOf(setOf<String>()) }
+    var isCardVisible by remember { mutableStateOf(false) }
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-    ) {
-        // Header
-        CustomToolbar(
-            title = "Calculate",
-            onBackClick = onBackClick
-        )
-
-        // Content
-        LazyColumn(
-            modifier = Modifier
-                .weight(1f)
-                .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(24.dp)
-        ) {
-            item {
-                Spacer(modifier = Modifier.height(16.dp))
-                DestinationSection()
-            }
-
-            item {
-                PackagingSection()
-            }
-
-            item {
-                CategoriesSection(
-                    selectedCategories = selectedCategories,
-                    onCategoriesChanged = { selectedCategories = it }
+    // Trigger animation when composable is first created
+    LaunchedEffect(Unit) {
+        delay(100)
+        isCardVisible = true
+    }
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            CustomToolbar(
+                title = "Calculate",
+                onBackClick = onBackClick,
+                modifier = Modifier
+                    .background(colorResource(R.color.app_color_purple))
+                    .sharedElement(
+                    sharedContentState = rememberSharedContentState(key = "toolbar"),
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    boundsTransform = { _, _ ->
+                        tween(durationMillis = 1000)
+                    }
                 )
+            )
+        },
+        content = { paddingValues ->
+
+            AnimatedVisibility(
+                visible = isCardVisible,
+                enter = fadeIn(
+                    animationSpec = tween(
+                        durationMillis = 600,
+                        delayMillis = 200 // Fixed delay instead of using undefined index
+                    )
+                ) + slideInVertically(
+                    animationSpec = tween(
+                        durationMillis = 300,
+                        delayMillis = 200
+                    ),
+                    initialOffsetY = { it / 4 } // Slide in from 25% down
+                )
+            ) {
+                // Content
+                LazyColumn(
+                    modifier = Modifier
+                        .padding(paddingValues)
+                        .padding(horizontal = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(24.dp)
+                ) {
+
+                    item {
+                        Spacer(modifier = Modifier.height(16.dp))
+                        DestinationSection()
+                    }
+
+                    item {
+                        PackagingSection()
+                    }
+
+                    item {
+                        CategoriesSection(
+                            selectedCategories = selectedCategories,
+                            onCategoriesChanged = { selectedCategories = it }
+                        )
+                    }
+
+                    item {
+                        CustomButton(
+                            onClick = onCalculateClick,
+                            modifier = Modifier.padding(vertical = 32.dp),
+                            text = "Calculate"
+                        )
+                    }
+                }
             }
         }
-
-        // Calculate Button
-        CustomButton(
-            onClick = onCalculateClick,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 32.dp),
-            text = "Calculate"
-        )
-    }
+    )
 }
 
 @Composable
@@ -337,8 +385,8 @@ fun CategoryChip(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun CalculateScreenPreview() {
-    CalculateScreen()
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun CalculateScreenPreview() {
+//    CalculateScreen()
+//}

@@ -73,6 +73,7 @@ fun SharedTransitionScope.HomeScreen(
         isTopSectionVisible = true
         delay(200) // Delay between top section and content
         isContentVisible = true
+        selectedTabIndex = 0
     }
 
     Scaffold(
@@ -106,6 +107,13 @@ fun SharedTransitionScope.HomeScreen(
                     Box(
                         modifier = Modifier
                             .background(color = colorResource(id = R.color.app_color_purple))
+                            .sharedElement(
+                                sharedContentState = rememberSharedContentState(key = "toolbar"),
+                                animatedVisibilityScope = animatedVisibilityScope,
+                                boundsTransform = { _, _ ->
+                                    tween(durationMillis = 1000)
+                                }
+                            )
                     ) {
                         SearchBar(
                             onSearchBarClick = onSearchBarClick,
