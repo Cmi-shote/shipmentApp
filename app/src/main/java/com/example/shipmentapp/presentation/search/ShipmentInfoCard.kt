@@ -1,5 +1,6 @@
 package com.example.shipmentapp.presentation.search
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,10 +22,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.shipmentapp.R
 import com.example.shipmentapp.models.Order
 import com.example.shipmentapp.models.sampleOrders
 import com.example.shipmentapp.ui.theme.ShipmentAppTheme
@@ -43,14 +47,12 @@ fun ShipmentInfoCard(
     ) {
         Box(
             modifier = Modifier
-                .size(40.dp)
-                .background(Color(0xFF543B9C), CircleShape),
+                .size(48.dp),
             contentAlignment = Alignment.Center
         ) {
-            Icon(
-                imageVector = Icons.Default.GifBox, // todo: change icon
-                contentDescription = "Shipment Icon",
-                tint = Color.White
+            Image(
+                painter = painterResource(R.drawable.box2),
+                contentDescription = "Package"
             )
         }
         Spacer(modifier = Modifier.width(12.dp))

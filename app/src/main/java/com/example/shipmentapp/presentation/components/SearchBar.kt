@@ -37,6 +37,7 @@ import com.example.shipmentapp.ui.theme.ShipmentAppTheme
 fun SearchBar(
     modifier: Modifier = Modifier,
     placeholder: String = "Enter the receipt number ...",
+    searchQuery: String = "",
     onSearchQueryChange: (String) -> Unit = {},
     showBackIcon: Boolean = false,
     onActionClick: () -> Unit = {},
@@ -44,7 +45,6 @@ fun SearchBar(
     onBackClick: () -> Unit = {},
     readOnly: Boolean = false
 ) {
-    var searchQuery by remember { mutableStateOf("") }
 
     Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
         if (showBackIcon) {
@@ -87,10 +87,7 @@ fun SearchBar(
             ) {
                 CustomOutlineField(
                     value = searchQuery,
-                    onValueChange = { newValue ->
-                        searchQuery = newValue
-                        onSearchQueryChange(newValue)
-                    },
+                    onValueChange = onSearchQueryChange,
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     readOnly = readOnly,

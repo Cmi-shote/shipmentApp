@@ -1,7 +1,6 @@
 package com.example.shipmentapp.navigation
 
 import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.runtime.Composable
@@ -19,13 +18,12 @@ import com.example.shipmentapp.presentation.shipmentHistory.ShipmentHistoryScree
 fun AppNavigation(navController: NavHostController, animatedVisibilityScope: SharedTransitionScope) {
     NavHost(
         navController,
-        startDestination = AppRoute.MainWithBottomNav,
-        exitTransition = { ExitTransition.None },
-        enterTransition = { EnterTransition.None },
-        popExitTransition = { ExitTransition.None },
-        popEnterTransition = { EnterTransition.None }
+        startDestination = AppRoute.MainWithBottomNav
     ) {
-        composable<AppRoute.MainWithBottomNav> {
+        composable<AppRoute.MainWithBottomNav>(
+            enterTransition = { EnterTransition.None },
+            popEnterTransition = { EnterTransition.None }
+        ) {
             with(animatedVisibilityScope) {
                 HomeScreen(
                     onSearchBarClick = {
@@ -51,8 +49,10 @@ fun AppNavigation(navController: NavHostController, animatedVisibilityScope: Sha
             }
         }
 
-        composable<AppRoute.CalculateScreen> {
-//            with(animatedVisibilityScope) {
+        composable<AppRoute.CalculateScreen>(
+            enterTransition = { EnterTransition.None },
+            popEnterTransition = { EnterTransition.None }
+        ) {
                 CalculateScreen(
                     onCalculateClick = {
                         navController.navigate(AppRoute.ResultsScreen)
@@ -60,12 +60,13 @@ fun AppNavigation(navController: NavHostController, animatedVisibilityScope: Sha
                     onBackClick = {
                         navController.popBackStack()
                     },
-//                    animatedVisibilityScope = this@composable
                 )
-//            }
         }
 
-        composable<AppRoute.ShipmentHistoryScreen> {
+        composable<AppRoute.ShipmentHistoryScreen>(
+            enterTransition = { EnterTransition.None },
+            popEnterTransition = { EnterTransition.None }
+        ) {
             ShipmentHistoryScreen(
                 onBackClick = {
                     navController.popBackStack()
@@ -73,7 +74,10 @@ fun AppNavigation(navController: NavHostController, animatedVisibilityScope: Sha
             )
         }
 
-        composable<AppRoute.ResultsScreen> {
+        composable<AppRoute.ResultsScreen>(
+            enterTransition = { EnterTransition.None },
+            popEnterTransition = { EnterTransition.None }
+        ) {
             ResultsScreen(
                 onBackToHome = {
                     navController.navigate(AppRoute.ShipmentHistoryScreen){

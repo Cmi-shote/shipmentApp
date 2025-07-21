@@ -6,6 +6,7 @@ import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -24,6 +25,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,13 +33,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.shipmentapp.R
 import com.example.shipmentapp.models.Order
 import com.example.shipmentapp.models.sampleOrders
 import com.example.shipmentapp.presentation.components.SearchBar
-import com.example.shipmentapp.ui.theme.ShipmentAppTheme
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
@@ -46,8 +47,10 @@ fun SharedTransitionScope.SearchScreen(
     animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
     orders: List<Order> = sampleOrders,
-    onBackClick: () -> Unit = {}
+    onBackClick: () -> Unit = {},
+    viewModel: SearchViewModel = viewModel()
 ) {
+    val uiState by viewModel.uiState.collectAsState()
     var isCardVisible by remember { mutableStateOf(false) }
     var isTopSectionVisible by remember { mutableStateOf(false) }
 
@@ -59,23 +62,25 @@ fun SharedTransitionScope.SearchScreen(
         isCardVisible = true
     }
 
+    LaunchedEffect(uiState.searchQuery) {
+        isCardVisible = false // Start fade out
+        delay(500)
+        isCardVisible = true // Start fade/slide in
+    }
+
     LazyColumn(modifier = modifier) {
         item {
-            AnimatedVisibility(
-                visible = isTopSectionVisible,
-                enter = fadeIn(
-                    animationSpec = tween(durationMillis = 600)
-                ) + slideInVertically(
-                    animationSpec = tween(durationMillis = 600),
-                    initialOffsetY = { -it } // Slide from above (negative offset)
-                )
-            ) {
                 TopAppBar(
                     title = {
                         SearchBar(
+                            searchQuery = uiState.searchQuery,
                             showBackIcon = true,
+                            onSearchQueryChange = viewModel::onSearchQueryChange,
                             onSearchBarClick = { },
-                            onBackClick = onBackClick,
+                            onBackClick = {
+                                viewModel.clearSearch()
+                                onBackClick()
+                            },
                             modifier = Modifier
                                 .padding(end = 16.dp)
                                 .sharedElement(
@@ -92,7 +97,7 @@ fun SharedTransitionScope.SearchScreen(
                         containerColor = colorResource(id = R.color.app_color_purple)
                     )
                 )
-            }
+//
         }
 
         item {
@@ -121,6 +126,9 @@ fun SharedTransitionScope.SearchScreen(
                         delayMillis = 0
                     ),
                     initialOffsetY = { it / 4 } // Slide in from 25% down
+                ),
+                exit = fadeOut(
+                    animationSpec = tween(durationMillis = 100)
                 )
             ) {
                 Card(
@@ -131,7 +139,7 @@ fun SharedTransitionScope.SearchScreen(
                     colors = CardDefaults.cardColors(containerColor = Color.White)
                 ) {
                     Column {
-                        orders.forEachIndexed { index, order ->
+                        uiState.filteredOrders.forEachIndexed { index, order ->
                             if (index != 0) {
                                 HorizontalDivider(
                                     modifier = Modifier.padding(horizontal = 24.dp),
