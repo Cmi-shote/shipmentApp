@@ -1,5 +1,7 @@
 package com.example.shipmentapp.navigation
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.runtime.Composable
@@ -17,7 +19,11 @@ import com.example.shipmentapp.presentation.shipmentHistory.ShipmentHistoryScree
 fun AppNavigation(navController: NavHostController, animatedVisibilityScope: SharedTransitionScope) {
     NavHost(
         navController,
-        startDestination = AppRoute.MainWithBottomNav
+        startDestination = AppRoute.MainWithBottomNav,
+        exitTransition = { ExitTransition.None },
+        enterTransition = { EnterTransition.None },
+        popExitTransition = { ExitTransition.None },
+        popEnterTransition = { EnterTransition.None }
     ) {
         composable<AppRoute.MainWithBottomNav> {
             with(animatedVisibilityScope) {
