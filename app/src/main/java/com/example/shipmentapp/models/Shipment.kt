@@ -2,6 +2,28 @@ package com.example.shipmentapp.models
 
 import com.example.shipmentapp.R
 
+/**
+ * This file contains the data model definitions and sample data for the Shipment Tracking application.
+ *
+ * It includes:
+ * - [Shipment]: Data class representing a single shipment with various details like sender/receiver info,
+ * status, tracking number, and financial details.
+ * - [ShipmentStatus]: Enum class defining the possible states a shipment can be in (e.g., LOADING, IN_PROGRESS).
+ * - [Vehicles]: Data class for vehicle types used in shipments, including an image resource.
+ * - [User]: Data class for user information, including name, avatar, and location.
+ * - [Order]: Data class for order details, used in the search functionality, containing item name,
+ * order number, and pickup/drop-off locations.
+ * - [TabItem]: Data class used for defining the tabs in the Shipment History screen, including title,
+ * count of items in that category, and the associated [ShipmentStatus].
+ *
+ * It also provides sample data lists for:
+ * - [sampleOrders]: A list of predefined [Order] objects for demonstration and testing the search feature.
+ * - [tabs]: A list of [TabItem]s representing the available categories for shipment filtering.
+ * - [sampleShipments]: A comprehensive list of predefined [Shipment] objects used for displaying
+ * shipment history and testing filtering by status.
+ * - [vehiclesList]: A list of [Vehicles] for demonstration.
+ * - [sampleUser]: A single [User] object for demonstration.
+ */
 data class Shipment(
     val senderCity: String,
     val senderCode: String,
