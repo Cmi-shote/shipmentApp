@@ -39,6 +39,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.shipmentapp.R
 import com.example.shipmentapp.models.Shipment
 import com.example.shipmentapp.models.Vehicles
@@ -148,6 +149,7 @@ fun SharedTransitionScope.HomeScreen(
                     ) {
                         Text(
                             text = "Tracking",
+                            fontSize = 20.sp,
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Medium,
                         )
@@ -160,6 +162,7 @@ fun SharedTransitionScope.HomeScreen(
 
                         Text(
                             text = "Available vehicles",
+                            fontSize = 20.sp,
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Medium,
                         )

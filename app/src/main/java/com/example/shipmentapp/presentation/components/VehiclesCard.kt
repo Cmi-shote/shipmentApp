@@ -51,6 +51,7 @@ fun VehiclesCard(
             ) {
                 Text(
                     text = title,
+                    fontSize = 20.sp,
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.align(Alignment.Start)
                     )

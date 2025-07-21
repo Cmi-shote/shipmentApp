@@ -72,6 +72,7 @@ fun ShipmentCard(
                         text = "Shipment Number",
                         fontWeight = FontWeight.Medium,
                         color = Color.Gray,
+
                         style = MaterialTheme.typography.bodyLarge
                     )
                     Spacer(modifier = Modifier.height(4.dp))

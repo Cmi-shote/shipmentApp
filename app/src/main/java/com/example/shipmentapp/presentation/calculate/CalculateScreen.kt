@@ -157,6 +157,7 @@ fun DestinationSection() {
     ) {
         Text(
             text = "Destination",
+            fontSize = 20.sp,
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Medium
         )
@@ -236,6 +237,7 @@ fun PackagingSection() {
     ) {
         Text(
             text = "Packaging",
+            fontSize = 20.sp,
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Medium,
         )
@@ -307,6 +309,7 @@ fun CategoriesSection(
     ) {
         Text(
             text = "Categories",
+            fontSize = 20.sp,
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Medium
         )

@@ -1,9 +1,6 @@
 package com.example.shipmentapp.presentation.shipmentHistory
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.AnimatedVisibilityScope
-import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -14,7 +11,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,7 +20,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -133,6 +128,7 @@ fun ShipmentHistoryScreen(
                 item {
                     Text(
                         text = "Shipments",
+                        fontSize = 20.sp,
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(16.dp),
@@ -164,7 +160,6 @@ fun ShipmentHistoryScreen(
     )
 }
 
-// Tab Row Composable
 @Composable
 fun ShipmentTabRow(
     tabs: List<TabItem>,
@@ -173,40 +168,41 @@ fun ShipmentTabRow(
     modifier: Modifier = Modifier,
     isTabRowVisible: Boolean = true
 ) {
-    ScrollableTabRow(
-        selectedTabIndex = selectedTabIndex,
-        containerColor = Color.Transparent,
-        contentColor = Color.White,
-        indicator = { tabPositions ->
-            if (selectedTabIndex < tabPositions.size) {
-                Box(
-                    modifier = Modifier
-                        .tabIndicatorOffset(tabPositions[selectedTabIndex])
-                        .height(3.dp)
-                        .background(
-                            colorResource(id = R.color.app_color_orange),
-                        )
-                )
-            }
-        },
-        divider = {}
+    AnimatedVisibility(
+        visible = isTabRowVisible,
+        enter = slideInHorizontally(
+            initialOffsetX = { -it }, // Slide in from left (use -it for left, it for right)
+            animationSpec = tween(
+                durationMillis = 500,
+                easing = FastOutSlowInEasing
+            )
+        ) + fadeIn(
+            animationSpec = tween(
+                durationMillis = 500,
+                easing = FastOutSlowInEasing
+            )
+        )
     ) {
-        tabs.forEachIndexed { index, tab ->
-            AnimatedVisibility(
-                visible = isTabRowVisible,
-                enter = slideInHorizontally(
-                    initialOffsetX = { fullWidth -> fullWidth }, // Start from right
-                    animationSpec = tween(
-                        durationMillis = 500,
-                        easing = FastOutSlowInEasing
+        ScrollableTabRow(
+            selectedTabIndex = selectedTabIndex,
+            containerColor = Color.Transparent,
+            contentColor = Color.White,
+            edgePadding = 16.dp, // This controls the starting position
+            indicator = { tabPositions ->
+                if (selectedTabIndex < tabPositions.size) {
+                    Box(
+                        modifier = Modifier
+                            .tabIndicatorOffset(tabPositions[selectedTabIndex])
+                            .height(3.dp)
+                            .background(
+                                colorResource(id = R.color.app_color_orange),
+                            )
                     )
-                ) + fadeIn(
-                    animationSpec = tween(
-                        durationMillis = 500,
-                        easing = FastOutSlowInEasing
-                    )
-                )
-            ) {
+                }
+            },
+            divider = {}
+        ) {
+            tabs.forEachIndexed { index, tab ->
                 Tab(
                     selected = selectedTabIndex == index,
                     onClick = { onTabSelected(index) },
@@ -235,9 +231,7 @@ fun ShipmentTabRow(
                                         color = if (selectedTabIndex == index) colorResource(id = R.color.app_color_orange) else Color.LightGray.copy(
                                             alpha = 0.2f
                                         ),
-                                        shape = RoundedCornerShape(
-                                            16.dp
-                                        )
+                                        shape = RoundedCornerShape(16.dp)
                                     )
                             ) {
                                 Text(
