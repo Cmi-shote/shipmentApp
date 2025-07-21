@@ -52,7 +52,7 @@ fun AppNavigation(navController: NavHostController, animatedVisibilityScope: Sha
         }
 
         composable<AppRoute.CalculateScreen> {
-            with(animatedVisibilityScope) {
+//            with(animatedVisibilityScope) {
                 CalculateScreen(
                     onCalculateClick = {
                         navController.navigate(AppRoute.ResultsScreen)
@@ -60,9 +60,9 @@ fun AppNavigation(navController: NavHostController, animatedVisibilityScope: Sha
                     onBackClick = {
                         navController.popBackStack()
                     },
-                    animatedVisibilityScope = this@composable
+//                    animatedVisibilityScope = this@composable
                 )
-            }
+//            }
         }
 
         composable<AppRoute.ShipmentHistoryScreen> {

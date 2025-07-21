@@ -49,37 +49,50 @@ fun SharedTransitionScope.SearchScreen(
     onBackClick: () -> Unit = {}
 ) {
     var isCardVisible by remember { mutableStateOf(false) }
+    var isTopSectionVisible by remember { mutableStateOf(false) }
 
     // Trigger the animation when the composable is first composed
     LaunchedEffect(Unit) {
+        delay(100) // Small initial delay
+        isTopSectionVisible = true
         delay(300) // a small delay before showing the card
         isCardVisible = true
     }
 
     LazyColumn(modifier = modifier) {
         item {
-            TopAppBar(
-                title = {
-                    SearchBar(
-                        showBackIcon = true,
-                        onSearchBarClick = { },
-                        onBackClick = onBackClick,
-                        modifier = Modifier
-                            .padding(end = 16.dp)
-                            .sharedElement(
-                                sharedContentState = rememberSharedContentState(key = "searchK"),
-                                animatedVisibilityScope = animatedVisibilityScope,
-                                boundsTransform = { _, _ ->
-                                    tween(durationMillis = 1000)
-                                }
-                            ),
-                        placeholder = "#NEJ200899"
-                    )
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = colorResource(id = R.color.app_color_purple)
+            AnimatedVisibility(
+                visible = isTopSectionVisible,
+                enter = fadeIn(
+                    animationSpec = tween(durationMillis = 600)
+                ) + slideInVertically(
+                    animationSpec = tween(durationMillis = 600),
+                    initialOffsetY = { -it } // Slide from above (negative offset)
                 )
-            )
+            ) {
+                TopAppBar(
+                    title = {
+                        SearchBar(
+                            showBackIcon = true,
+                            onSearchBarClick = { },
+                            onBackClick = onBackClick,
+                            modifier = Modifier
+                                .padding(end = 16.dp)
+                                .sharedElement(
+                                    sharedContentState = rememberSharedContentState(key = "searchK"),
+                                    animatedVisibilityScope = animatedVisibilityScope,
+                                    boundsTransform = { _, _ ->
+                                        tween(durationMillis = 1000)
+                                    }
+                                ),
+                            placeholder = "#NEJ200899"
+                        )
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = colorResource(id = R.color.app_color_purple)
+                    )
+                )
+            }
         }
 
         item {

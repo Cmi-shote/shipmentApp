@@ -1,5 +1,9 @@
 package com.example.shipmentapp.presentation.components
 
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
@@ -13,8 +17,14 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -28,6 +38,45 @@ fun CustomToolbar(
     onBackClick: () -> Unit = {},
     title: String = ""
 ) {
+    var startAnimation by remember { mutableStateOf(false) }
+
+    LaunchedEffect(title) {
+        startAnimation = false
+        startAnimation = true
+    }
+
+    // Title animations
+    val titleOffsetY by animateDpAsState(
+        targetValue = if (startAnimation) 0.dp else 50.dp,
+        animationSpec = tween(
+            durationMillis = 500,
+            easing = FastOutSlowInEasing
+        ),
+        label = "title_offset"
+    )
+
+    val titleAlpha by animateFloatAsState(
+        targetValue = if (startAnimation) 1f else 0f,
+        animationSpec = tween(durationMillis = 500),
+        label = "title_alpha"
+    )
+
+    // Arrow animations
+    val arrowOffsetX by animateDpAsState(
+        targetValue = if (startAnimation) 0.dp else (-50).dp,
+        animationSpec = tween(
+            durationMillis = 500,
+            easing = FastOutSlowInEasing
+        ),
+        label = "arrow_offset"
+    )
+
+    val arrowAlpha by animateFloatAsState(
+        targetValue = if (startAnimation) 1f else 0f,
+        animationSpec = tween(durationMillis = 500),
+        label = "arrow_alpha"
+    )
+
     TopAppBar(
         title = {
             Box(
@@ -38,12 +87,20 @@ fun CustomToolbar(
                     text = title,
                     color = Color.White,
                     style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Medium
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier
+                        .offset(y = titleOffsetY)
+                        .alpha(titleAlpha)
                 )
             }
         },
         navigationIcon = {
-            IconButton(onClick = onBackClick) {
+            IconButton(
+                onClick = onBackClick,
+                modifier = Modifier
+                    .offset(x = arrowOffsetX)
+                    .alpha(arrowAlpha)
+            ) {
                 Icon(
                     imageVector = Icons.Default.ArrowBackIosNew,
                     contentDescription = "Back",

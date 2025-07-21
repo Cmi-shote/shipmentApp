@@ -1,6 +1,9 @@
 package com.example.shipmentapp.presentation.shipmentHistory
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -77,7 +80,16 @@ fun ShipmentHistoryScreen(
     var isTabRowVisible by remember { mutableStateOf(false) }
     var isToolbarVisible by remember { mutableStateOf(false) }
 
+//    val systemUiController = rememberSystemUiController()
+//    val statusBarColor = colorResource(id = R.color.app_color_purple)
+
+    // Set the status bar color when the screen is launched
     LaunchedEffect(Unit) {
+//        systemUiController.setStatusBarColor(
+//            color = statusBarColor,
+//            darkIcons = false // set to true if your text/icons are dark
+//        )
+        delay(100)
         isToolbarVisible = true
         delay(100) // Small delay before tab row
         isTabRowVisible = true
@@ -88,25 +100,10 @@ fun ShipmentHistoryScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-//            AnimatedVisibility(
-//                visible = isToolbarVisible,
-//                enter = slideInVertically(
-//                    animationSpec = tween(
-//                        durationMillis = 500,
-//                        easing = FastOutSlowInEasing
-//                    ),
-//                    initialOffsetY = { it / 4 } // Start 25% down
-//                ) + fadeIn(
-//                    animationSpec = tween(
-//                        durationMillis = 500
-//                    )
-//                )
-//            ) {
-                CustomToolbar(
-                    title = "Shipment History",
-                    onBackClick = onBackClick
-                )
-//            }
+            CustomToolbar(
+                title = "Shipment History",
+                onBackClick = onBackClick
+            )
         },
         content = { paddingValues ->
             Box(modifier = Modifier.fillMaxSize()) {

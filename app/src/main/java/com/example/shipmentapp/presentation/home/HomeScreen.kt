@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -37,7 +36,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.shipmentapp.R
@@ -49,7 +47,6 @@ import com.example.shipmentapp.presentation.components.BottomNavigationBar
 import com.example.shipmentapp.presentation.components.SearchBar
 import com.example.shipmentapp.presentation.components.ShipmentCard
 import com.example.shipmentapp.presentation.components.VehiclesCard
-import com.example.shipmentapp.ui.theme.ShipmentAppTheme
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalSharedTransitionApi::class)
@@ -67,10 +64,15 @@ fun SharedTransitionScope.HomeScreen(
     // Animation states
     var isTopSectionVisible by remember { mutableStateOf(false) }
     var isContentVisible by remember { mutableStateOf(false) }
+//    val systemUiController = rememberSystemUiController()
+//    val statusBarColor = colorResource(id = R.color.app_color_purple)
 
-    // Trigger animations with staggered delays
+    // Set the status bar color when the screen is launched
     LaunchedEffect(Unit) {
-        delay(100) // Small initial delay
+//        systemUiController.setStatusBarColor(
+//            color = statusBarColor,
+//            darkIcons = false // set to true if your text/icons are dark
+//        )
         isTopSectionVisible = true
         delay(200) // Delay between top section and content
         isContentVisible = true
@@ -90,21 +92,8 @@ fun SharedTransitionScope.HomeScreen(
                     initialOffsetY = { -it } // Slide from above (negative offset)
                 )
             ) {
-                HomePageToolbar()
-            }
-        },
-        content = { paddingValues ->
-            Column(modifier = Modifier.padding(paddingValues)) {
-                // Animated Search Bar Section - slides down and fades in
-                AnimatedVisibility(
-                    visible = isTopSectionVisible,
-                    enter = fadeIn(
-                        animationSpec = tween(durationMillis = 600, delayMillis = 100)
-                    ) + slideInVertically(
-                        animationSpec = tween(durationMillis = 600, delayMillis = 100),
-                        initialOffsetY = { -it / 2 } // Slide from above with less distance
-                    )
-                ) {
+                Column {
+                    HomePageToolbar()
                     Box(
                         modifier = Modifier
                             .background(color = colorResource(id = R.color.app_color_purple))
@@ -131,6 +120,22 @@ fun SharedTransitionScope.HomeScreen(
                         )
                     }
                 }
+            }
+        },
+        content = { paddingValues ->
+            Column(modifier = Modifier.padding(paddingValues)) {
+                // Animated Search Bar Section - slides down and fades in
+//                AnimatedVisibility(
+//                    visible = isTopSectionVisible,
+//                    enter = fadeIn(
+//                        animationSpec = tween(durationMillis = 600, delayMillis = 100)
+//                    ) + slideInVertically(
+//                        animationSpec = tween(durationMillis = 600, delayMillis = 100),
+//                        initialOffsetY = { -it / 2 } // Slide from above with less distance
+//                    )
+//                ) {
+//
+//                }
 
                 // Animated Content Section - slides up and fades in
                 AnimatedVisibility(

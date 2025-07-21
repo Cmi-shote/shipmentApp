@@ -61,12 +61,13 @@ import com.example.shipmentapp.R
 import com.example.shipmentapp.presentation.components.CustomButton
 import com.example.shipmentapp.presentation.components.CustomOutlineField
 import com.example.shipmentapp.presentation.components.CustomToolbar
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun SharedTransitionScope.CalculateScreen(
-    animatedVisibilityScope: AnimatedVisibilityScope,
+fun CalculateScreen(
+//    animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit = {},
     onCalculateClick: () -> Unit = {}
@@ -74,8 +75,15 @@ fun SharedTransitionScope.CalculateScreen(
     var selectedCategories by remember { mutableStateOf(setOf<String>()) }
     var isCardVisible by remember { mutableStateOf(false) }
 
-    // Trigger animation when composable is first created
+//    val systemUiController = rememberSystemUiController()
+//    val statusBarColor = colorResource(id = R.color.app_color_purple)
+
+    // Set the status bar color when the screen is launched
     LaunchedEffect(Unit) {
+//        systemUiController.setStatusBarColor(
+//            color = statusBarColor,
+//            darkIcons = false // set to true if your text/icons are dark
+//        )
         delay(100)
         isCardVisible = true
     }
@@ -86,14 +94,13 @@ fun SharedTransitionScope.CalculateScreen(
                 title = "Calculate",
                 onBackClick = onBackClick,
                 modifier = Modifier
-                    .background(colorResource(R.color.app_color_purple))
-                    .sharedElement(
-                    sharedContentState = rememberSharedContentState(key = "toolbar"),
-                    animatedVisibilityScope = animatedVisibilityScope,
-                    boundsTransform = { _, _ ->
-                        tween(durationMillis = 1000)
-                    }
-                )
+//                    .sharedElement(
+//                    sharedContentState = rememberSharedContentState(key = "toolbar"),
+//                    animatedVisibilityScope = animatedVisibilityScope,
+//                    boundsTransform = { _, _ ->
+//                        tween(durationMillis = 1000)
+//                    }
+//                )
             )
         },
         content = { paddingValues ->
@@ -293,7 +300,6 @@ fun PackagingDropdown() {
     )
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun CategoriesSection(
     selectedCategories: Set<String>,
@@ -388,8 +394,8 @@ fun CategoryChip(
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun CalculateScreenPreview() {
-//    CalculateScreen()
-//}
+@Preview(showBackground = true)
+@Composable
+fun CalculateScreenPreview() {
+    CalculateScreen()
+}

@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.shipmentapp.R
 import com.example.shipmentapp.presentation.components.CustomButton
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.delay
 
 @Composable
@@ -53,8 +54,16 @@ fun ResultsScreen(
 ) {
     var isVisible by remember { mutableStateOf(false) }
     var isButtonVisible by remember { mutableStateOf(false) }
+//    val systemUiController = rememberSystemUiController()
+//    val statusBarColor = Color.White
 
+    // Set the status bar color when the screen is launched
     LaunchedEffect(Unit) {
+//        systemUiController.setStatusBarColor(
+//            color = statusBarColor,
+//            darkIcons = false // set to true if your text/icons are dark
+//        )
+
         delay(100) // Small delay before animation starts
         isVisible = true
         delay(400)
