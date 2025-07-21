@@ -98,13 +98,6 @@ fun SharedTransitionScope.HomeScreen(
                     Box(
                         modifier = Modifier
                             .background(color = colorResource(id = R.color.app_color_purple))
-                            .sharedElement(
-                                sharedContentState = rememberSharedContentState(key = "toolbar"),
-                                animatedVisibilityScope = animatedVisibilityScope,
-                                boundsTransform = { _, _ ->
-                                    tween(durationMillis = 1000)
-                                }
-                            )
                     ) {
                         SearchBar(
                             onSearchBarClick = onSearchBarClick,
@@ -125,18 +118,6 @@ fun SharedTransitionScope.HomeScreen(
         },
         content = { paddingValues ->
             Column(modifier = Modifier.padding(paddingValues)) {
-                // Animated Search Bar Section - slides down and fades in
-//                AnimatedVisibility(
-//                    visible = isTopSectionVisible,
-//                    enter = fadeIn(
-//                        animationSpec = tween(durationMillis = 600, delayMillis = 100)
-//                    ) + slideInVertically(
-//                        animationSpec = tween(durationMillis = 600, delayMillis = 100),
-//                        initialOffsetY = { -it / 2 } // Slide from above with less distance
-//                    )
-//                ) {
-//
-//                }
 
                 // Animated Content Section - slides up and fades in
                 AnimatedVisibility(
