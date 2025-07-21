@@ -35,7 +35,7 @@ class SearchViewModel : ViewModel() {
 
         _uiState.update { it.copy(searchQuery = query, filteredOrders = emptyList()) }
         viewModelScope.launch {
-            delay(200) // 0.5s delay for fade out
+            delay(200)
             _uiState.update { it.copy(filteredOrders = filteredResults) }
         }
     }

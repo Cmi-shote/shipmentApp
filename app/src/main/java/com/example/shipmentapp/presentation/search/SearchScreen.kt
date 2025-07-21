@@ -36,8 +36,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.shipmentapp.R
-import com.example.shipmentapp.models.Order
-import com.example.shipmentapp.models.sampleOrders
 import com.example.shipmentapp.presentation.components.SearchBar
 import kotlinx.coroutines.delay
 
@@ -46,7 +44,6 @@ import kotlinx.coroutines.delay
 fun SharedTransitionScope.SearchScreen(
     animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
-    orders: List<Order> = sampleOrders,
     onBackClick: () -> Unit = {},
     viewModel: SearchViewModel = viewModel()
 ) {

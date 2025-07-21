@@ -79,7 +79,7 @@ fun ShipmentCard(
                     Text(
                         text = shipment.shipmentNumber,
                         style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.Black,
+                        fontWeight = FontWeight.Bold,
                     )
                 }
 

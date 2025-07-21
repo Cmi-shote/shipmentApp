@@ -40,6 +40,7 @@ import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -60,6 +61,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.shipmentapp.R
 import com.example.shipmentapp.models.Shipment
 import com.example.shipmentapp.models.ShipmentStatus
@@ -74,8 +76,10 @@ import kotlinx.coroutines.delay
 @Composable
 fun ShipmentHistoryScreen(
     onBackClick: () -> Unit = {},
-    shipments: List<Shipment> = sampleShipments
+    shipments: List<Shipment> = sampleShipments,
+    viewModel: ShipmentHistoryViewModel = viewModel()
 ) {
+    val uiState by viewModel.uiState.collectAsState()
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     var isCardVisible by remember { mutableStateOf(false) }
     var isTabRowVisible by remember { mutableStateOf(false) }
@@ -96,6 +100,12 @@ fun ShipmentHistoryScreen(
         isTabRowVisible = true
         delay(200) // Small delay before cards start animating
         isCardVisible = true
+    }
+
+    LaunchedEffect(uiState.selectedTabIndex) {
+        isCardVisible = false // Start fade out
+        delay(500)
+        isCardVisible = true // Start fade/slide in
     }
 
     Scaffold(
@@ -122,7 +132,10 @@ fun ShipmentHistoryScreen(
                             ShipmentTabRow(
                                 tabs = tabs,
                                 selectedTabIndex = selectedTabIndex,
-                                onTabSelected = { selectedTabIndex = it },
+                                onTabSelected = {
+                                    selectedTabIndex = it
+                                    viewModel.onTabSelected(it)
+                                },
                                 isTabRowVisible = isTabRowVisible
                             )
                         }
@@ -138,7 +151,7 @@ fun ShipmentHistoryScreen(
                         )
                     }
 
-                    itemsIndexed(shipments) { index, shipment ->
+                    itemsIndexed(uiState.filteredShipments) { index, shipment ->
                         AnimatedVisibility(
                             visible = isCardVisible,
                             enter = fadeIn(
@@ -380,7 +393,7 @@ fun ShipmentStatusIcon(modifier: Modifier = Modifier, status: ShipmentStatus) {
         )
 
         ShipmentStatus.COMPLETED -> Triple(
-            Color(0xFFDCFCE7),
+            Color.LightGray,
             Icons.Default.CheckCircleOutline,
             "completed"
         )
@@ -390,6 +403,7 @@ fun ShipmentStatusIcon(modifier: Modifier = Modifier, status: ShipmentStatus) {
             Icons.Default.History,
             "pending"
         )
+        else -> Triple(Color.White, Icons.Default.Sync, "loading")
     }
 
     Row(
@@ -400,13 +414,12 @@ fun ShipmentStatusIcon(modifier: Modifier = Modifier, status: ShipmentStatus) {
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Rotating arrow icon (you can replace with your custom arrow)
         Icon(
             imageVector = icon,
             contentDescription = "In progress",
             modifier = Modifier
                 .size(16.dp)
-                .rotate(90f),
+                .rotate(if (status == ShipmentStatus.IN_PROGRESS) 270f else 0f),
             tint = color
         )
 

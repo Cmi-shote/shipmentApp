@@ -19,7 +19,7 @@ data class Shipment(
 )
 
 enum class ShipmentStatus {
-    LOADING, IN_PROGRESS, COMPLETED, PENDING
+    LOADING, IN_PROGRESS, COMPLETED, PENDING, ALL, CANCELLED
 }
 
 data class Vehicles(
@@ -43,7 +43,8 @@ data class Order(
 
 data class TabItem(
     val title: String,
-    val count: Int
+    val count: Int,
+    val status: ShipmentStatus
 )
 
 val sampleOrders = listOf(
@@ -80,11 +81,11 @@ val sampleOrders = listOf(
 )
 
 val tabs = listOf(
-    TabItem("All", 12),
-    TabItem("Completed", 5),
-    TabItem("In progress", 3),
-    TabItem("Pending Order", 4),
-    TabItem("Cancelled", 0)
+    TabItem("All", 12, ShipmentStatus.ALL),
+    TabItem("Completed", 5, ShipmentStatus.COMPLETED),
+    TabItem("In progress", 3, ShipmentStatus.IN_PROGRESS),
+    TabItem("Pending Order", 4, ShipmentStatus.PENDING),
+    TabItem("Cancelled", 0, ShipmentStatus.CANCELLED)
 )
 
 val sampleShipments = listOf(
@@ -179,7 +180,7 @@ val sampleShipments = listOf(
         shipmentNumber = "NEJ200899341222231"
     ),
     Shipment(
-        status = ShipmentStatus.IN_PROGRESS,
+        status = ShipmentStatus.COMPLETED,
         title = "Arriving today!",
         description = "Your delivery, #NEJ200899341222231\nfrom Atlanta, is arriving today!",
         amount = "\$3570 USD",
@@ -192,7 +193,97 @@ val sampleShipments = listOf(
         senderCity = "Atlanta",
         senderCode = "5243",
         shipmentNumber = "NEJ200899341222231"
-    )
+    ),
+    Shipment(
+        status = ShipmentStatus.COMPLETED,
+        title = "Arriving today!",
+        description = "Your delivery, #NEJ200899341222231\nfrom Atlanta, is arriving today!",
+        amount = "\$3570 USD",
+        date = "Sep 20, 2023",
+        trackingNumber = "NEJ200899341222231",
+        origin = "Atlanta",
+        receiverCity = "Chicago",
+        receiverCode = "6342",
+        timeRange = "2 day - 3 days",
+        senderCity = "Atlanta",
+        senderCode = "5243",
+        shipmentNumber = "NEJ200899341222231"
+    ),
+    Shipment(
+        status = ShipmentStatus.COMPLETED,
+        title = "Arriving today!",
+        description = "Your delivery, #NEJ200899341222231\nfrom Atlanta, is arriving today!",
+        amount = "\$3570 USD",
+        date = "Sep 20, 2023",
+        trackingNumber = "NEJ200899341222231",
+        origin = "Atlanta",
+        receiverCity = "Chicago",
+        receiverCode = "6342",
+        timeRange = "2 day - 3 days",
+        senderCity = "Atlanta",
+        senderCode = "5243",
+        shipmentNumber = "NEJ200899341222231"
+    ),
+    Shipment(
+        status = ShipmentStatus.COMPLETED,
+        title = "Arriving today!",
+        description = "Your delivery, #NEJ200899341222231\nfrom Atlanta, is arriving today!",
+        amount = "\$3570 USD",
+        date = "Sep 20, 2023",
+        trackingNumber = "NEJ200899341222231",
+        origin = "Atlanta",
+        receiverCity = "Chicago",
+        receiverCode = "6342",
+        timeRange = "2 day - 3 days",
+        senderCity = "Atlanta",
+        senderCode = "5243",
+        shipmentNumber = "NEJ200899341222231"
+    ),
+    Shipment(
+        status = ShipmentStatus.COMPLETED,
+        title = "Arriving today!",
+        description = "Your delivery, #NEJ200899341222231\nfrom Atlanta, is arriving today!",
+        amount = "\$3570 USD",
+        date = "Sep 20, 2023",
+        trackingNumber = "NEJ200899341222231",
+        origin = "Atlanta",
+        receiverCity = "Chicago",
+        receiverCode = "6342",
+        timeRange = "2 day - 3 days",
+        senderCity = "Atlanta",
+        senderCode = "5243",
+        shipmentNumber = "NEJ200899341222231"
+    ),
+    Shipment(
+        status = ShipmentStatus.PENDING,
+        title = "Arriving today!",
+        description = "Your delivery, #NEJ200899341222231\nfrom Atlanta, is arriving today!",
+        amount = "\$650 USD",
+        date = "Sep 20, 2023",
+        trackingNumber = "NEJ200899341222231",
+        origin = "Atlanta",
+        receiverCity = "Chicago",
+        receiverCode = "6342",
+        timeRange = "2 day - 3 days",
+        senderCity = "Atlanta",
+        senderCode = "5243",
+        shipmentNumber = "NEJ200899341222231"
+    ),
+    Shipment(
+        status = ShipmentStatus.PENDING,
+        title = "Arriving today!",
+        description = "Your delivery, #NEJ200899341222231\nfrom Atlanta, is arriving today!",
+        amount = "\$650 USD",
+        date = "Sep 20, 2023",
+        trackingNumber = "NEJ200899341222231",
+        origin = "Atlanta",
+        receiverCity = "Chicago",
+        receiverCode = "6342",
+        timeRange = "2 day - 3 days",
+        senderCity = "Atlanta",
+        senderCode = "5243",
+        shipmentNumber = "NEJ200899341222231"
+    ),
 )
 
 
