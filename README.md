@@ -28,4 +28,9 @@ Some icons used in the app could not be sourced directly. In such cases, the ico
 - Custom UI/UX for additional features and screens
 - Some icons cropped from Dribbble images due to unavailability of direct sources
 
+## Future Additions
+- **Add Shipment**: A feature to allow users to add new shipments directly within the app.
+- **Improve Dark Theme**: Refine the color palette and contrast in dark mode to ensure better readability and visual consistency in low-light environments.
+
+
 ---
